@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import ProductCard from '../ProductCard';
 import { Products } from '../../Products';
+// -------------------------------------------------------------------------------------
 
 
 const HomePage = () => {

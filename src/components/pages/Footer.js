@@ -7,7 +7,8 @@ const Footer = () => {
     <footer>
       <Container>
         <Row>
-          <Col>copyright@2023</Col>
+          <hr/>
+          <Col align='center'>copyright@2023</Col>
         </Row>
       </Container>
     </footer>
