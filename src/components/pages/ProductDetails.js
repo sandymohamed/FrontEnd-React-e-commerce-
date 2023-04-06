@@ -10,16 +10,14 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    // axios.get(`https://example.com/products/${id}`)
-    //   .then(response => {
-    //     setProduct(response.data);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
+    axios.get(`/products/${id}`)
+      .then(response => {
+        setProduct(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
 
-    const myProduct = Products.filter(product => parseInt(product.id) === parseInt(id));
-    setProduct(myProduct[0])
 }, [id]);
 
   if (!product) {
@@ -36,7 +34,9 @@ const ProductDetails = () => {
           <h3>{product.name}</h3>
           <p>{product.description}</p>
           <p>Price: {product.price}</p>
-          <Button variant="primary">Add to Cart</Button>
+          <button  className={product.countInStock >=0 ? 'btn btn-primary' : 'btn btn-muted' } disabled={product.countInStock <= 0}>Add to Cart</button>
+
+        
         </Col>
       </Row>
     </Container>

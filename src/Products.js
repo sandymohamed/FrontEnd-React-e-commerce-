@@ -7,7 +7,7 @@ export const Products = [
     brand: "Brand 1",
     category: "Category 1",
     price: 10.99,
-    countInStock: 10,
+    countInStock: 0,
     rating: 4.5,
     version: "1.0"
   },

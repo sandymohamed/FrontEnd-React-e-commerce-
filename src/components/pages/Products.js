@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet';
 import { Container, Row, Col } from 'react-bootstrap';
 import ProductCard from '../ProductCard';
-import { Products } from '../../Products';
+import axios from 'axios';
 // -------------------------------------------------------------------------------------
 
 const ProductsPage = () => {
@@ -10,8 +10,15 @@ const ProductsPage = () => {
 
     useEffect(() => {
 
-        setProductList(Products);
+        const fetchProducts = async () => {
 
+            const { data } = await axios.get('/products');
+      
+            setProductList(data);
+      
+          }
+      
+          fetchProducts();
     }, [productList]);
 
 

@@ -10,12 +10,9 @@ console.log(product);
     <Card 
     // style={{ width: '18rem' }}
     >
-      {/* <Link to={`/product/${id}`}> */}
-      <a href={`/product/${id}`}>
-
+      <Link to={`/product/${id}`}>
         <Card.Img variant="top" src={image} />
-      </a>
-      {/* </Link> */}
+      </Link>
       <Card.Body>
         <Card.Title>{name}</Card.Title>
         <Card.Text>{description}</Card.Text>

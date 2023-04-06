@@ -11,8 +11,11 @@ function MainLayout() {
       <Header />
 
       <Outlet />
-
+      <div className='relative-bottom mt-3'>
       <Footer />
+
+      </div>
+
     </div>
   );
 }
