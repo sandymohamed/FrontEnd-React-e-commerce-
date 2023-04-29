@@ -7,14 +7,14 @@ import { Container } from 'react-bootstrap';
 
 function MainLayout() {
   return (
-    <div className="MainLayout">
+    <div className="MainLayout" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Header />
 
-      <Outlet />
-      <div className='relative-bottom mt-3'>
-      <Footer />
-
+      <div style={{ flex: 1 }}>
+        <Outlet />
       </div>
+
+      <Footer style={{ flexShrink: 0 }} />
 
     </div>
   );

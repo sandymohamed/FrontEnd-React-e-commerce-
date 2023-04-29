@@ -2,25 +2,22 @@ import { useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet';
 import { Container, Row, Col } from 'react-bootstrap';
 import ProductCard from '../ProductCard';
-import axios from 'axios';
+// import AxiosInstance from '../../axiosInstance';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchProducts, selectProducts, selectLoading, selectError } from '../../redux/reducers/productsSlice';
+
 // -------------------------------------------------------------------------------------
 
 const ProductsPage = () => {
-    const [productList, setProductList] = useState(null);
+
+    const products = useSelector(selectProducts);
+    const loading = useSelector(selectLoading);
+    const error = useSelector(selectError);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-
-        const fetchProducts = async () => {
-
-            const { data } = await axios.get('/products');
-      
-            setProductList(data);
-      
-          }
-      
-          fetchProducts();
-    }, [productList]);
-
+        dispatch(fetchProducts());
+    }, [dispatch]);
 
 
     return (
@@ -35,13 +32,25 @@ const ProductsPage = () => {
                         <h1> Our products:</h1>
                     </Col>
                 </Row>
-                <Row>
-                    {productList && (
-                        productList.map((product) => (
-                            <Col key={product.id} sm={12} md={6} lg={4} xl={3} className='mt-2'>
-                                <ProductCard product={product} />
-                            </Col>
-                        )))}
+                <Row className='parent'>
+
+                    {
+                        loading ? (
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        ) :
+
+                        error ? (<Col className='text-danger '>Error: {error}</Col>) :
+
+                                products && (
+                                    products.map((product) => (
+                                        <Col key={product._id} sm={12} md={6} lg={4} xl={3} className='mt-2'>
+                                            <ProductCard product={product} />
+                                        </Col>
+                                    ))
+                                )
+                    }
                 </Row>
             </Container>
         </>

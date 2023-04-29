@@ -1,27 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
 
 const ProductCard = ({ product }) => {
-  const { name, image, price, description, rating, id } = product;
-console.log(product);
+  const { name, image, price, description, rating, _id, countInStock } = product;
+
+  const [quantity, setQuantity] = useState(1);
+
+  const incrementQuantity = () => {
+    if (quantity < countInStock) {
+      setQuantity(prevQuantity => prevQuantity + 1);
+    }
+  };
+
+  const decrementQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(prevQuantity => prevQuantity - 1);
+    }
+  };
+
+  useEffect(() => {
+    // This effect runs every time the quantity changes
+  }, [quantity]);
+
   return (
-    <Card 
-    // style={{ width: '18rem' }}
-    >
-      <Link to={`/product/${id}`}>
+    <Card>
+      <Link to={`/product/${_id}`}>
         <Card.Img variant="top" src={image} />
       </Link>
       <Card.Body>
         <Card.Title>{name}</Card.Title>
         <Card.Text>{description}</Card.Text>
         <Card.Text>
-            <Rating  value={rating} text={`rate: ${rating}`} />
+          <Rating value={rating} text={`rate: ${rating}`} />
         </Card.Text>
-        
+
         <Card.Text>{`Price: ${price}`}</Card.Text>
-        <button className='btn btn-primary' variant="primary">Add to Cart</button>
+        <div className="d-flex align-items-center">
+          <button
+            className="btn btn-primary me-2"
+            onClick={decrementQuantity}
+            disabled={quantity === 1}
+          >
+            -
+          </button>
+          <span className="me-2">Qty:{quantity}</span>
+          <button
+            className="btn btn-primary"
+            onClick={incrementQuantity}
+            disabled={quantity >= countInStock}
+          >
+            +
+          </button>
+          <button className={countInStock >= 0 ? 'btn btn-primary ms-auto' : 'btn btn-muted ms-auto'} disabled={product.countInStock <= 0}>Add to Cart</button>
+
+        </div>
       </Card.Body>
     </Card>
   );

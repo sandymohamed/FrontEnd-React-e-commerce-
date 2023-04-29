@@ -2,26 +2,39 @@ import { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import ProductCard from '../ProductCard';
 // import { Products } from '../../Products';
-import axios from 'axios';
+// import AxiosInstance from '../../axiosInstance';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchProducts, selectProducts, selectLoading, selectError } from '../../redux/reducers/productsSlice';
 
 // -------------------------------------------------------------------------------------
 
 
 const HomePage = () => {
 
-  const [products, setProducts] = useState(null);
+  // const [products, setProducts] = useState(null);
+
+
+  const products = useSelector(selectProducts);
+  const loading = useSelector(selectLoading);
+  const error = useSelector(selectError);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
-      const { data } = await axios.get('/products');
 
-      setProducts(data);
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
 
-    }
+  //     const { data } = await AxiosInstance.get('api/products');
 
-    fetchProducts();
-  }, [products]);
+  //     setProducts(data);
+
+  //   }
+
+  //   fetchProducts();
+  // }, [products]);
 
 
   return (
@@ -32,13 +45,26 @@ const HomePage = () => {
           <p>Here are some of our latest products:</p>
         </Col>
       </Row>
-      <Row>
-        {products && (
-          products.map((product) => (
-            <Col key={product.id} sm={12} md={6} lg={4} xl={3} className='mt-2'>
-              <ProductCard product={product} />
-            </Col>
-          )))}
+
+      <Row className='parent'>
+
+        {
+          loading ? (
+            <div class="spinner-border text-primary " role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          ) :
+
+            error ? (<Col className='text-danger '>Error: {error}</Col>) :
+
+              products && (
+                products.map((product) => (
+                  <Col key={product._id} sm={12} md={6} lg={4} xl={3} className='mt-2'>
+                    <ProductCard product={product} />
+                  </Col>
+                ))
+              )
+        }
       </Row>
     </Container>
   );

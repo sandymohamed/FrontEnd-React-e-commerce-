@@ -3,13 +3,23 @@ import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import App from './App';
-// import './bootstrap.min.css';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
+import { productsSlice } from './redux/reducers/productsSlice';
 
 // -------------------------------------------------------------------------------------
+const store = configureStore({
+  reducer: {
+    products: productsSlice.reducer,
+  },
+  middleware: [thunk],
+});
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>
+  </Provider>
 );

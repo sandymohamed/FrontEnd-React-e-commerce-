@@ -2,15 +2,31 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Image, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Products } from '../../Products';
+import AxiosInstance from '../../axiosInstance';
+
 // -------------------------------------------------------------------------------------
 
 const ProductDetails = () => {
   const { id } = useParams();
+
   const [product, setProduct] = useState(null);
 
+  const [quantity, setQuantity] = useState(1);
+
+  const incrementQuantity = () => {
+    if (quantity < product.countInStock) {
+      setQuantity(prevQuantity => prevQuantity + 1);
+    }
+  };
+
+  const decrementQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(prevQuantity => prevQuantity - 1);
+    }
+  };
+
   useEffect(() => {
-    axios.get(`/products/${id}`)
+    AxiosInstance.get(`/api/products/${id}`)
       .then(response => {
         setProduct(response.data);
       })
@@ -18,10 +34,14 @@ const ProductDetails = () => {
         console.log(error);
       });
 
-}, [id]);
+  }, [id, quantity]);
 
   if (!product) {
-    return <div>Loading...</div>;
+    return (
+      <div class="spinner-border text-primary " role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    )
   }
 
   return (
@@ -34,9 +54,28 @@ const ProductDetails = () => {
           <h3>{product.name}</h3>
           <p>{product.description}</p>
           <p>Price: {product.price}</p>
-          <button  className={product.countInStock >=0 ? 'btn btn-primary' : 'btn btn-muted' } disabled={product.countInStock <= 0}>Add to Cart</button>
 
-        
+          <div className="d-flex align-items-center">
+          <button
+            className="btn btn-primary me-2"
+            onClick={decrementQuantity}
+            disabled={quantity === 1}
+          >
+            -
+          </button>
+          <span className="me-2">Qty: {quantity}</span>
+          <button
+            className="btn btn-primary"
+            onClick={incrementQuantity}
+            disabled={quantity >= product.countInStock}
+          >
+            +
+          </button>
+
+          <button className={product.countInStock >= 0 ? 'btn btn-primary ms-auto' : 'btn btn-muted ms-auto'} disabled={product.countInStock <= 0}>Add to Cart</button>
+        </div>
+
+
         </Col>
       </Row>
     </Container>
