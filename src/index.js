@@ -7,11 +7,14 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { productsSlice } from './redux/reducers/productsSlice';
+import { cartSlice } from './redux/reducers/cartSlice';
 
 // -------------------------------------------------------------------------------------
 const store = configureStore({
   reducer: {
     products: productsSlice.reducer,
+    cart: cartSlice.reducer,
+
   },
   middleware: [thunk],
 });

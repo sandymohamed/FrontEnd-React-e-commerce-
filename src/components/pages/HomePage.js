@@ -24,19 +24,6 @@ const HomePage = () => {
   }, [dispatch]);
 
 
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-
-  //     const { data } = await AxiosInstance.get('api/products');
-
-  //     setProducts(data);
-
-  //   }
-
-  //   fetchProducts();
-  // }, [products]);
-
-
   return (
     <Container>
       <Row>

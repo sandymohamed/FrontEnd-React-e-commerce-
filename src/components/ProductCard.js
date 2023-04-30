@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem, removeItem, clearCart } from '../redux/reducers/cartSlice';
 
 const ProductCard = ({ product }) => {
   const { name, image, price, description, rating, _id, countInStock } = product;
@@ -20,9 +22,29 @@ const ProductCard = ({ product }) => {
     }
   };
 
+  const dispatch = useDispatch();
+  const items = useSelector(state => state.cart.items);
+  const totalQuantity = useSelector(state => state.cart.totalQuantity);
+
+  
+  
+  const handleAddToCart = (item) => {
+    dispatch(addItem(item));
+  };
+
+  const handleRemoveFromCart = (id) => {
+    dispatch(removeItem(id));
+  };
+
+  const handleClearCart = () => {
+    dispatch(clearCart());
+  };
+
   useEffect(() => {
     // This effect runs every time the quantity changes
-  }, [quantity]);
+    
+
+  }, [dispatch, quantity]);
 
   return (
     <Card>
@@ -53,7 +75,21 @@ const ProductCard = ({ product }) => {
           >
             +
           </button>
-          <button className={countInStock >= 0 ? 'btn btn-primary ms-auto' : 'btn btn-muted ms-auto'} disabled={product.countInStock <= 0}>Add to Cart</button>
+
+
+          {product.name} - {product.quantity} x {product.price} = {product.totalPrice}
+            <button onClick={() => handleAddToCart(product)}>+</button>
+
+
+          <button 
+          className={
+            countInStock >= 0 ?
+             'btn btn-primary ms-auto' :
+              'btn btn-muted ms-auto'
+              } 
+              disabled={product.countInStock <= 0}
+              onClick={() => handleAddToCart(product)}
+              >Add to Cart</button>
 
         </div>
       </Card.Body>
