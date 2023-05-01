@@ -1,13 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
-$Box: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+$DarkBox: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+$LightBox: -.6rem .4rem .6rem rgba(0, 0, 0, 0.4);
+
+.MainLayout {
+  background-color: #474747;
+
+}
 
 
 .App {
   text-align: center;
 
   .boxShadow {
-    box-shadow: $Box;
+    border: none;
+    box-shadow: $LightBox;
   }
 
   .brand {
@@ -21,15 +28,43 @@ $Box: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 
     color: #333;
     padding: 5px;
     border-radius: 5px;
-    box-shadow: $Box;
+    box-shadow: $LightBox;
   }
 
   .parent {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* or any other height */
+    padding-bottom: .7vh;
+
+    .headTitle {
+      text-align: start;
+      margin: .5rem;
+      color: #f7f0eb;
+    }
+
+    .buttons {
+      background-color: #E78A00;
+      color: #fff;
+
+      &:hover {
+        background-color: #bb7307;
+
+      }
+    }
   }
-  
+
+  .MainLayout {
+
+    .header {
+      background-color: #E78A00;
+    }
+  }
+
+  .img-container {
+    height: 30vh;
+    box-shadow: $LightBox;
+  }
+
 
 }

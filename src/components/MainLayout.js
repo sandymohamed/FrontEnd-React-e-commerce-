@@ -1,16 +1,23 @@
-import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from './pages/Header';
 import Footer from './pages/Footer';
-import { Container } from 'react-bootstrap';
+import '../App.scss'
 // -------------------------------------------------------------------------------------
 
+
 function MainLayout() {
+
+
   return (
-    <div className="MainLayout" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <div className="MainLayout"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+      }}>
+
       <Header />
 
-      <div style={{ flex: 1 }}>
+      <div style={{ flex: 1, }}>
         <Outlet />
       </div>
 
@@ -21,3 +28,4 @@ function MainLayout() {
 }
 
 export default MainLayout;
+

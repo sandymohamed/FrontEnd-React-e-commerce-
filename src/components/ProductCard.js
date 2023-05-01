@@ -26,8 +26,8 @@ const ProductCard = ({ product }) => {
   const items = useSelector(state => state.cart.items);
   const totalQuantity = useSelector(state => state.cart.totalQuantity);
 
-  
-  
+
+
   const handleAddToCart = (item) => {
     dispatch(addItem(item));
   };
@@ -42,7 +42,7 @@ const ProductCard = ({ product }) => {
 
   useEffect(() => {
     // This effect runs every time the quantity changes
-    
+
 
   }, [dispatch, quantity]);
 
@@ -53,9 +53,11 @@ const ProductCard = ({ product }) => {
       </Link>
       <Card.Body>
         <Card.Title>{name}</Card.Title>
-        <Card.Text>{description}</Card.Text>
+        {/* <Card.Text>{description}</Card.Text> */}
         <Card.Text>
-          <Rating value={rating} text={`rate: ${rating}`} />
+          <Rating value={rating}
+          // text={`rate: ${rating}`} 
+          />
         </Card.Text>
 
         <Card.Text>{`Price: ${price}`}</Card.Text>
@@ -78,18 +80,18 @@ const ProductCard = ({ product }) => {
 
 
           {product.name} - {product.quantity} x {product.price} = {product.totalPrice}
-            <button onClick={() => handleAddToCart(product)}>+</button>
+          <button onClick={() => handleAddToCart(product)}>+</button>
 
 
-          <button 
-          className={
-            countInStock >= 0 ?
-             'btn btn-primary ms-auto' :
-              'btn btn-muted ms-auto'
-              } 
-              disabled={product.countInStock <= 0}
-              onClick={() => handleAddToCart(product)}
-              >Add to Cart</button>
+          <button
+            className={
+              countInStock >= 0 ?
+                'btn btn-primary ms-auto' :
+                'btn btn-muted ms-auto'
+            }
+            disabled={product.countInStock <= 0}
+            onClick={() => handleAddToCart(product)}
+          >Add to Cart</button>
 
         </div>
       </Card.Body>
