@@ -15,12 +15,12 @@ const ProductsPage = () => {
     const error = useSelector(selectError);
     const dispatch = useDispatch();
 
-    const { setPageName} = useContext(PageNameContext)
+    const { setPageName } = useContext(PageNameContext)
 
 
     useEffect(() => {
         dispatch(fetchProducts());
-    
+
         setPageName('Products')
 
     }, [dispatch]);
@@ -29,15 +29,10 @@ const ProductsPage = () => {
     return (
         <>
             <Helmet>
-                <title>My App Title</title>
+                <title>Products</title>
             </Helmet>
 
             <Container>
-                <Row>
-                    <Col align='start' className='m-1'>
-                        <h1> Our products:</h1>
-                    </Col>
-                </Row>
                 <Row className='parent'>
 
                     {
@@ -47,11 +42,11 @@ const ProductsPage = () => {
                             </div>
                         ) :
 
-                        error ? (<Col className='text-danger '>Error: {error}</Col>) :
+                            error ? (<Col className='text-danger '>Error: {error}</Col>) :
 
                                 products && (
                                     products.map((product) => (
-                                        <Col key={product._id} sm={12} md={6} lg={4} xl={3} className='mt-2'>
+                                        <Col key={product._id} xs={6} md={4} lg={3} className='mt-2'>
                                             <ProductCard product={product} />
                                         </Col>
                                     ))

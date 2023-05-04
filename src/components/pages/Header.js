@@ -23,8 +23,10 @@ const navLinks = [
 
 const StyledLink = styled.p`
   color: white;
-  font-size: .8rem;
-  text-align: left
+  font-size: .9rem;
+  text-align: left;
+  padding: .3rem;
+  border-radius: .5rem;
 `;
 // -------------------------------------------------------------------------------------
 
@@ -34,20 +36,22 @@ const Header = () => {
 
   const { pageName, setPageName } = useContext(PageNameContext)
 
+  const [activeLink, setActiveLink] = useState('Home');
+
   const renderTooltip = (title, ...props) => (
     <Tooltip id="button-tooltip" {...props}>
       {title}
     </Tooltip>
   );
   return (
-    <div className='header'>
+    <div className='header w-100 '>
 
       <Row className=' p-3'>
 
         <Col className='d-flex justify-content-start'  >
           <Row>
             <StyledLink
-              className='brand h1 '
+              className='brand fs-1 '
             >Shop
               <strong
                 style={{ color: '#474747' }}
@@ -68,8 +72,12 @@ const Header = () => {
                 overlay={renderTooltip('login')}
               >
 
-                <Link to={'/login'} className='text-reset text-decoration-none'>
-                  <StyledLink >
+                <Link
+                  to={'/login'}
+                  className='text-reset text-decoration-none'
+                  onClick={() => setActiveLink('Login')}
+                >
+                  <StyledLink className={activeLink === 'Login' ? 'active-text' : ''} >
                     <BiLogIn className='h3' />
                   </StyledLink>
                 </Link>
@@ -83,8 +91,12 @@ const Header = () => {
                 delay={{ show: 250, hide: 400 }}
                 overlay={renderTooltip('cart')}
               >
-                <Link to={'/cart'} className='text-reset text-decoration-none'>
-                  <StyledLink  >
+                <Link
+                  to={'/cart'}
+                  className='text-reset text-decoration-none'
+                  onClick={() => setActiveLink('Cart')}
+                >
+                  <StyledLink className={activeLink === 'Cart' ? 'active-text' : ''} >
                     <TiShoppingCart className='h3' title="Like" />
                   </StyledLink>
                 </Link>
@@ -96,20 +108,22 @@ const Header = () => {
         </Col>
       </Row>
 
-      <Row style={{ width: '90%', marginLeft: '5%', marginRight: '5%' }}>
+      <Row style={{ width: '90%', padding: 0, marginLeft: '5%', marginRight: '5%' }}>
         <StyledLink >
           <h3>{pageName}</h3>
         </StyledLink>
         <Navbar bg="dark" expand="lg">
           <Container>
-            {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
-            {/* <Navbar.Collapse id="basic-navbar-nav"> */}
+
             <Nav className="me-auto display-flex flex-row">
               {
                 navLinks.map((item, index) => (
                   <Nav.Link key={index} className='pe-2'>
-                    <Link to={item.link} className='text-reset text-decoration-none'>
-                      <StyledLink>
+                    <Link
+                      to={item.link}
+                      className='text-reset text-decoration-none'
+                      onClick={() => setActiveLink(item.title)}>
+                      <StyledLink className={activeLink === item.title ? 'active-text' : ''}>
                         {item.title}
                       </StyledLink>
                     </Link>
@@ -132,8 +146,6 @@ const Header = () => {
               </NavDropdown>
 
             </Nav>
-
-            {/* </Navbar.Collapse> */}
           </Container>
         </Navbar>
       </Row>

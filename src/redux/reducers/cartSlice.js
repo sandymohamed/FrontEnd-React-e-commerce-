@@ -13,10 +13,10 @@ export const cartSlice = createSlice({
     reducers: {
       addItem(state, action) {
         const newItem = action.payload;
-        console.log('s', state.items.id);
+        console.log('s', state.items);
         console.log('new', newItem);
 
-        const existingItem = state.items.find(item =>item.id === newItem._id);
+        const existingItem = state.items.find(item => item._id === newItem._id);
         
         state.totalQuantity++;
 
@@ -26,11 +26,16 @@ export const cartSlice = createSlice({
             
             if(!existingItem ) {
                 state.items.push({
-                    id: newItem._id,
+                    _id: newItem._id,
                     price: newItem.price,
                     quantity: 1,
                     totalPrice: newItem.price,
-                    name: newItem.name
+                    name: newItem.name,
+                    image: newItem.image,
+                    brand: newItem.brand,
+                    qty: newItem.countInStock,
+                    
+
                 })
             }else {
                 existingItem.quantity++;

@@ -1,6 +1,6 @@
 export const Products = [
   {
-    id: 1,
+    _id: 1,
     name: "Product 1",
     image: "https://dummyimage.com/300x300/000/fff",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -12,7 +12,7 @@ export const Products = [
     version: "1.0"
   },
   {
-    id: 2,
+    _id: 2,
     name: "Product 2",
     image: "https://dummyimage.com/300x300/000/fff",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -24,7 +24,7 @@ export const Products = [
     version: "1.1"
   },
   {
-    id: 3,
+    _id: 3,
     name: "Product 3",
     image: "https://dummyimage.com/300x300/000/fff",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -36,7 +36,7 @@ export const Products = [
     version: "2.0"
   },
   {
-    id: 4,
+    _id: 4,
     name: "Product 4",
     image: "https://dummyimage.com/300x300/000/fff",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -48,7 +48,7 @@ export const Products = [
     version: "1.2"
   },
     {
-      id: 11,
+      _id: 11,
       name: "Product 1",
       image: "https://dummyimage.com/300x300/000/fff",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -60,7 +60,7 @@ export const Products = [
       version: "1.0"
     },
     {
-      id: 12,
+      _id: 12,
       name: "Product 2",
       image: "https://dummyimage.com/300x300/000/fff",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -72,7 +72,7 @@ export const Products = [
       version: "1.1"
     },
     {
-      id: 13,
+      _id: 13,
       name: "Product 3",
       image: "https://dummyimage.com/300x300/000/fff",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -84,7 +84,7 @@ export const Products = [
       version: "2.0"
     },
     {
-      id: 14,
+      _id: 14,
       name: "Product 4",
       image: "https://dummyimage.com/300x300/000/fff",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",

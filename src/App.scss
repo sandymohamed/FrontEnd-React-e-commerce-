@@ -1,26 +1,53 @@
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
+*{
+  padding: 0;
+  margin: 0;
+}
+
 $DarkBox: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-$LightBox: -.6rem .4rem .6rem rgba(0, 0, 0, 0.4);
+$DarkerBox: -.6rem .4rem .6rem rgba(0, 0, 0, 0.4);
+$Coloryellow: #E78A00;
+
 
 .MainLayout {
   background-color: #474747;
 
 }
 
+.yellow-text {
+  color: $Coloryellow;
+}
+
+.box-border {
+  border:none;
+  border-radius: 10px;
+  box-shadow:  -.6rem .6rem .6rem rgba(0, 0, 0, 0.4);
+}
+
+
+.cart-card {
+background-color: #6c6969;
+}
 
 .App {
   text-align: center;
+  z-index: 0;
 
   .boxShadow {
     border: none;
-    box-shadow: $LightBox;
+    box-shadow: $DarkerBox;
   }
 
   .brand {
     font-family: 'Righteous', cursive;
   }
+  .active-text {
+    background-color: $Coloryellow;
 
+  }
+
+ 
   /* main.scss */
   [title] {
     background-color: #c50d0d;
@@ -28,7 +55,7 @@ $LightBox: -.6rem .4rem .6rem rgba(0, 0, 0, 0.4);
     color: #333;
     padding: 5px;
     border-radius: 5px;
-    box-shadow: $LightBox;
+    box-shadow: $DarkerBox;
   }
 
   .parent {
@@ -44,7 +71,7 @@ $LightBox: -.6rem .4rem .6rem rgba(0, 0, 0, 0.4);
     }
 
     .buttons {
-      background-color: #E78A00;
+      background-color: $Coloryellow;
       color: #fff;
 
       &:hover {
@@ -52,18 +79,24 @@ $LightBox: -.6rem .4rem .6rem rgba(0, 0, 0, 0.4);
 
       }
     }
+
+ 
   }
 
   .MainLayout {
 
     .header {
-      background-color: #E78A00;
+      margin: 0;
+      background-color: $Coloryellow;
+      overflow: hidden;
+      z-index: 9;
+
     }
   }
 
   .img-container {
     height: 30vh;
-    box-shadow: $LightBox;
+    box-shadow: $DarkerBox;
   }
 
 

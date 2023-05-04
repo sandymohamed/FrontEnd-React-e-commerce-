@@ -1,12 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
+import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, removeItem, clearCart } from '../redux/reducers/cartSlice';
+// --------------------------------------------------------------------
+
+const StyledCard = styled.div`
+background-color: white;
+border:none;
+border-radius: 10px;
+box-shadow:  -.6rem .6rem .6rem rgba(0, 0, 0, 0.4);
+
+`;
+
+const StyledImg = styled.img`
+height: 90%; width:100%;
+border: none;
+border-radius: 10px;
+
+`;
+const StyledBody = styled.div`
+height: 10%; width:100%;
+
+`;
+
+// --------------------------------------------------------------------
 
 const ProductCard = ({ product }) => {
-  const { name, image, price, description, rating, _id, countInStock } = product;
+  const { name, image, price, oldPrice, rating, _id, countInStock } = product;
 
   const [quantity, setQuantity] = useState(1);
 
@@ -47,21 +70,41 @@ const ProductCard = ({ product }) => {
   }, [dispatch, quantity]);
 
   return (
-    <Card>
+    <Card className='box-border'>
       <Link to={`/product/${_id}`}>
-        <Card.Img variant="top" src={image} />
+        <StyledImg variant="top" src={image}  />
       </Link>
-      <Card.Body>
-        <Card.Title>{name}</Card.Title>
-        {/* <Card.Text>{description}</Card.Text> */}
-        <Card.Text>
-          <Rating value={rating}
-          // text={`rate: ${rating}`} 
-          />
-        </Card.Text>
+      <StyledBody>
 
-        <Card.Text>{`Price: ${price}`}</Card.Text>
-        <div className="d-flex align-items-center">
+        <Row>
+        <Col>
+        <Card.Title align="start" className='ps-1 brand text-nowrap'>{name}</Card.Title>
+         </Col>
+          
+          <Col>
+            <Card.Text><Rating value={rating} /></Card.Text>
+          </Col>
+        </Row>
+
+          {oldPrice ?  <>
+            <Card.Text className='yellow-text fs-3 text-nowrap' > <span className='text-decoration-line-through fs-6 text-dark'> {`${oldPrice} $`}</span>  {`${price} $`} </Card.Text> 
+            
+          </>
+          :
+          <Card.Text className='yellow-text fs-3' >{`${price} $`}</Card.Text>
+          }
+           
+        <button
+          className={
+            countInStock >= 0 ?
+              'btn buttons ms-auto' :
+              'btn btn-muted ms-auto'
+          }
+          disabled={product.countInStock <= 0}
+          onClick={() => handleAddToCart(product)}
+        >{countInStock > 0 ? 'Add to Cart' : 'Sold Out'}</button>
+
+        {/* <div className="d-flex align-items-center">
           <button
             className="btn btn-primary me-2"
             onClick={decrementQuantity}
@@ -80,21 +123,12 @@ const ProductCard = ({ product }) => {
 
 
           {product.name} - {product.quantity} x {product.price} = {product.totalPrice}
-          <button onClick={() => handleAddToCart(product)}>+</button>
+          <button onClick={() => handleAddToCart(product)}>+</button> */}
 
 
-          <button
-            className={
-              countInStock >= 0 ?
-                'btn btn-primary ms-auto' :
-                'btn btn-muted ms-auto'
-            }
-            disabled={product.countInStock <= 0}
-            onClick={() => handleAddToCart(product)}
-          >Add to Cart</button>
 
-        </div>
-      </Card.Body>
+        {/* </div> */}
+      </StyledBody>
     </Card>
   );
 };

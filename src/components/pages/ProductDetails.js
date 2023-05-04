@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Container, Row, Col, Image, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import AxiosInstance from '../../axiosInstance';
+import { PageNameContext } from '../../App';
 
 // -------------------------------------------------------------------------------------
 
@@ -25,15 +25,19 @@ const ProductDetails = () => {
     }
   };
 
+  const { pageName, setPageName } = useContext(PageNameContext)
+
   useEffect(() => {
     AxiosInstance.get(`/api/products/${id}`)
       .then(response => {
         setProduct(response.data);
+
       })
       .catch(error => {
         console.log(error);
       });
 
+      setPageName(product?.name)
   }, [id, quantity]);
 
   if (!product) {

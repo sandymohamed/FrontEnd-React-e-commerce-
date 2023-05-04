@@ -8,6 +8,7 @@ import Error404 from "./Error404";
 import HomePage from "./HomePage";
 import Products from "./Products";
 import ProductDetails from "./ProductDetails";
+import CartPage from "./CartPage";
 // -------------------------------------------------------------------------------------
 
 
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
         {
           path: "product/:id",
           element: <ProductDetails />,
+        },
+        {
+          path: "cart",
+          element: <CartPage />,
         },
       ],
     },

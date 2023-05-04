@@ -4,8 +4,8 @@ import Carousel from 'react-bootstrap/Carousel';
 function Carousels() {
   return (
     // <div className='img-container'>
-    <Carousel controls={false} className='rounded'>
-      <Carousel.Item className='rounded' >
+    <Carousel controls={false} className='rounded mt-4'>
+      <Carousel.Item  >
         <img
           className='w-100 rounded img-container m-2 me-4 '
           src='/images/pic-1.jpeg'
@@ -13,7 +13,7 @@ function Carousels() {
         />
 
       </Carousel.Item>
-      <Carousel.Item className='rounded'>
+      <Carousel.Item >
         <img
           className='w-100 rounded img-container m-2 me-4 '
           src='/images/pic-2.jpeg'
@@ -21,7 +21,7 @@ function Carousels() {
         />
 
       </Carousel.Item>
-      <Carousel.Item className='rounded'>
+      <Carousel.Item >
         <img
           className='w-100 rounded img-container m-2 me-4 '
           src='/images/pic-3.webp'
@@ -30,7 +30,7 @@ function Carousels() {
 
       </Carousel.Item>
 
-      <Carousel.Item className='rounded'>
+      <Carousel.Item >
 
         <img
           className='w-100 rounded img-container m-2 me-4 '
@@ -39,7 +39,7 @@ function Carousels() {
         />
 
       </Carousel.Item>
-      <Carousel.Item className='rounded'>
+      <Carousel.Item >
         <img
           className='w-100 rounded img-container m-2 me-4 '
           src='/images/pic-5.webp'
