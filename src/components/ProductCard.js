@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import Rating from './Rating';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, removeItem, clearCart } from '../redux/reducers/cartSlice';
+import { addItem, removeItem, clearCart, addCart, selectCartItems, selectTotalQuantity } from '../redux/reducers/cartSlice';
+import { selectUser } from '../redux/reducers/userSlice';
 // --------------------------------------------------------------------
 
 const StyledCard = styled.div`
@@ -46,13 +47,16 @@ const ProductCard = ({ product }) => {
   };
 
   const dispatch = useDispatch();
-  const items = useSelector(state => state?.cart?.items);
-  const totalQuantity = useSelector(state => state?.cart?.totalQuantity);
+  const items = useSelector(selectCartItems);
+  const user = useSelector(selectUser);
+  const totalQuantity = useSelector(selectTotalQuantity);
 
 
 
   const handleAddToCart = (item) => {
-    dispatch(addItem(item));
+    
+    const data = {user: user._id, ...item}
+    dispatch(addCart(data)).then((res)=> console.log(res));
   };
 
   const handleRemoveFromCart = (item) => {

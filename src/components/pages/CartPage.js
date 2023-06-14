@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { addItem, removeItem, clearCart, selectCartItems, selectTotalQuantity, selectTotal } from '../../redux/reducers/cartSlice';
+import { addItem, removeItem, clearCart, selectCartItems, selectTotalQuantity, selectTotal, removeCart } from '../../redux/reducers/cartSlice';
 import { PageNameContext } from '../../App';
 
 // -------------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ const CartPage = () => {
   };
 
   const handleClearCart = () => {
-    dispatch(clearCart());
+    dispatch(removeCart());
     // console.log('clear');
 
   };

@@ -7,8 +7,7 @@ import { Form, Button, Col, Row, Container, Card } from 'react-bootstrap';
 import PaymentButton from '../PaymentButton';
 import '../../App.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { orderSlice, selectPaymentMethods } from '../../redux/reducers/orderSlice';
-import Checkout from './Checkout';
+import { orderSlice,  } from '../../redux/reducers/orderSlice';
 import { useNavigate } from 'react-router-dom';
 // --------------------------------------------------------------------
 
@@ -33,6 +32,15 @@ const PaymentForm = () => {
     }
   });
   const selectedPaymentOption = watch('paymentOption');
+
+
+// order details:
+
+
+
+
+
+
 
   const onSubmit = async (data) => {
     console.log(data);
