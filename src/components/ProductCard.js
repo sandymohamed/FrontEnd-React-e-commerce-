@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Rating from './Rating';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, removeItem, clearCart, addCart, selectCartItems, selectTotalQuantity } from '../redux/reducers/cartSlice';
+import { addItem, removeItem, clearCart, addCart, selectCartitems, selectTotalQuantity, removeItemFromCart } from '../redux/reducers/cartSlice';
 import { selectUser } from '../redux/reducers/userSlice';
 // --------------------------------------------------------------------
 
@@ -47,7 +47,7 @@ const ProductCard = ({ product }) => {
   };
 
   const dispatch = useDispatch();
-  const items = useSelector(selectCartItems);
+  const items = useSelector(selectCartitems);
   const user = useSelector(selectUser);
   const totalQuantity = useSelector(selectTotalQuantity);
 
@@ -56,11 +56,11 @@ const ProductCard = ({ product }) => {
   const handleAddToCart = (item) => {
     
     const data = {user: user._id, ...item}
-    dispatch(addCart(data)).then((res)=> console.log(res));
+    dispatch(addCart(data));
   };
 
   const handleRemoveFromCart = (item) => {
-    dispatch(removeItem(item));
+    dispatch(removeItemFromCart(item));
   };
 
   const handleClearCart = () => {
@@ -108,30 +108,7 @@ const ProductCard = ({ product }) => {
           onClick={() => handleAddToCart(product)}
         >{countInStock > 0 ? 'Add to Cart' : 'Sold Out'}</button>
 
-        {/* <div className="d-flex align-items-center">
-          <button
-            className="btn btn-primary me-2"
-            onClick={decrementQuantity}
-            disabled={quantity === 1}
-          >
-            -
-          </button>
-          <span className="me-2">Qty:{quantity}</span>
-          <button
-            className="btn btn-primary"
-            onClick={incrementQuantity}
-            disabled={quantity >= countInStock}
-          >
-            +
-          </button>
-
-
-          {product.name} - {product.quantity} x {product.price} = {product.totalPrice}
-          <button onClick={() => handleAddToCart(product)}>+</button> */}
-
-
-
-        {/* </div> */}
+      
       </StyledBody>
     </Card>
   );

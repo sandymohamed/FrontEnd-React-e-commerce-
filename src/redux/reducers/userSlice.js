@@ -130,6 +130,20 @@ export const updateProfile = (data) => async dispatch => {
       }
 }
 
+
+export const fetchUserData = () => async dispatch => {
+  
+  try {
+    // Make an API request to fetch user data
+    const response = await AxiosInstance.get('/api/user/user-details');
+console.log(response);
+    dispatch(setUser(response.data));  
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+  }
+
+};
+
 export const selectUser = state => state.user.user;
 export const selectLoading = state => state.user.loading;
 export const selectError = state => state.user.error;

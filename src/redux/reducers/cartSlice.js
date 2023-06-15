@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import AxiosInstance from '../../axiosInstance';
+
 // --------------------------------------------------------------------
 
 const initialState = {
     user: null,
-    items: [],
+    products: [],
     totalQuantity: 0,
     total: 0,
     error: null,
@@ -15,13 +16,21 @@ export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
+        setCart(state, action) {
+            state.products =  action.payload.products;
+            state.user =  action.payload.user;
+            state.totalQuantity =  action.payload.totalQuantity;
+            state.total =  action.payload.total;
+            state.error = null;
+
+        },
         addItem(state, action) {
             const newItem = action.payload;
             
-            // console.log(newItem);
+            console.log(newItem);
             state.error = null;
             
-            const existingItem = state.items.find(item => item._id === newItem._id);
+            const existingItem = state.products.find(item => item._id === newItem._id);
             // console.log(existingItem);
             
             state.user = newItem?.user;
@@ -30,7 +39,7 @@ export const cartSlice = createSlice({
             if (newItem.countInStock >= 1) {
 
                 if (!existingItem) {
-                    state.items.push({
+                    state.products.push({
                         _id: newItem._id,
                         price: newItem.price,
                         quantity: 1,
@@ -57,7 +66,7 @@ export const cartSlice = createSlice({
         removeItem(state, action) {
             state.error = null;
             const item = action.payload;
-            const existingItem = state.items.find(piece => piece._id === item._id);
+            const existingItem = state.products.find(piece => piece._id === item._id);
             state.totalQuantity--;
             state.total = state.total - item.price;
 
@@ -66,7 +75,7 @@ export const cartSlice = createSlice({
 
                 if (existingItem?.quantity === 1) {
                     existingItem.quantity = existingItem.quantity - 1;
-                    state.items = state.items.filter(item => item.quantity > 0);
+                    state.products = state.products.filter(item => item.quantity > 0);
 
 
                 } else {
@@ -79,20 +88,19 @@ export const cartSlice = createSlice({
         },
 
         clearCart(state) {
-            state.items = [];
+            state.products = [];
             state.totalQuantity = 0;
             state.total = 0;
             state.error = null;
         },
         setError(state, action) {
-            state.loading = false;
             state.error = action.payload;
 
         }
     }
 })
 
-export const { addItem, removeItem, clearCart, setError } = cartSlice.actions;
+export const { setCart, addItem, removeItem, clearCart, setError } = cartSlice.actions;
 
 export const addCart = (data) => async (dispatch, getState) => {
     console.log(data);
@@ -101,8 +109,7 @@ export const addCart = (data) => async (dispatch, getState) => {
         
         const cartState = getState().cart;
         const response = await AxiosInstance.post('/api/carts/', cartState);
-        console.log(cartState);
-        console.log('res: ', response);
+        console.log('res: ', response.data);
 
     } catch (error) {
         if (error.response && error.response.status === 400) {
@@ -145,6 +152,33 @@ export const removeItemFromCart = (data) => async (dispatch, getState) => {
 };
 
 
+
+export const getCartDetails = (user) => async (dispatch) => {
+    try {
+        
+        // const cartState = getState().cart;
+        const response = await AxiosInstance.get(`/api/carts/user/${user}`);
+        dispatch(setCart(response.data));
+        console.log('res: ', response.data);
+
+    } catch (error) {
+        if (error.response && error.response.status === 400) {
+            // Server returned an error response with data
+            dispatch(setError('Invalid data'));
+        } else if (error.request) {
+            // Request made but no response received
+            dispatch(setError('Request failed. Please try again.'));
+
+        }
+        else {
+            // Something else happened
+            dispatch(setError('An unexpected error occurred.'));
+        }
+    }
+};
+
+
+
 export const removeCart = (id) => async (dispatch) => {
     try {
         const response = await AxiosInstance.delete('api/cart/:id',);
@@ -166,6 +200,6 @@ export const removeCart = (id) => async (dispatch) => {
     }
 };
 
-export const selectCartItems = state => state.cart.items;
+export const selectCartitems = state => state.cart.products;
 export const selectTotal = state => state.cart.total;
 export const selectTotalQuantity = state => state.cart.totalQuantity;

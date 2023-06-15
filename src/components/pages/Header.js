@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import '../../App.scss';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectUser } from '../../redux/reducers/userSlice';
 import UserAvatar from '../UserAvatar';
 import { selectTotalQuantity } from '../../redux/reducers/cartSlice';
-
+import AxiosInstance from '../../axiosInstance';
 
 // -------------------------------------------------------------------------------------
 
@@ -49,6 +49,7 @@ const Header = () => {
   const user = useSelector(selectUser);
   const TotalQuantity = useSelector(selectTotalQuantity);
 
+
   const { firstName } = user;
 
   const [activeLink, setActiveLink] = useState('Home');
@@ -58,11 +59,15 @@ const Header = () => {
     navigate('/login', { state: { from: location } })
   };
 
+
+
   const renderTooltip = (title, ...props) => (
     <Tooltip id="button-tooltip" {...props}>
       {title}
     </Tooltip>
   );
+
+
   return (
     <div className='header w-100 '>
 
