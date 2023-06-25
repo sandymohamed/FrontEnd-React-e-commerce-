@@ -22,7 +22,6 @@ export const cartSlice = createSlice({
             state.totalQuantity =  action.payload.totalQuantity;
             state.total =  action.payload.total;
             state.error = null;
-
         },
         addItem(state, action) {
             const newItem = action.payload;
@@ -52,6 +51,7 @@ export const cartSlice = createSlice({
 
                     })
 
+                    // console.log();
                     state.total = state.total + newItem.price;
 
                 } else {
@@ -92,6 +92,7 @@ export const cartSlice = createSlice({
             state.totalQuantity = 0;
             state.total = 0;
             state.error = null;
+
         },
         setError(state, action) {
             state.error = action.payload;
@@ -179,10 +180,10 @@ export const getCartDetails = (user) => async (dispatch) => {
 
 
 
-export const removeCart = (id) => async (dispatch) => {
+export const removeCart = (user) => async (dispatch) => {
     try {
-        const response = await AxiosInstance.delete('api/cart/:id',);
-        dispatch(removeItem());
+        const response = await AxiosInstance.delete(`api/carts/${user}`);
+        dispatch(clearCart());
 
     } catch (error) {
         if (error.response && error.response.status === 404) {

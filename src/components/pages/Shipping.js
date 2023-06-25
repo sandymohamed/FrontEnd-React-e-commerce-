@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import {  useNavigate, } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
+import { Link, useNavigate, } from 'react-router-dom';
+import { Form, Button, Breadcrumb, Container } from 'react-bootstrap';
 import { TiWarningOutline } from 'react-icons/ti';
 import '../../App.scss';
 import Message from '../Message';
 import { addShippingAddress, selectError, selectLoading, selectShihppingAddress } from '../../redux/reducers/orderSlice';
+import StepsHeader from '../StepsHeader';
 
 // --------------------------------------------------------------------
 const schema = yup.object().shape({
@@ -66,84 +67,91 @@ const Shipping = () => {
     }
 
     return (
-        <Form onSubmit={handleSubmit(onSubmit)} className='m-2 text-light'>
-            {alertVariant && (
-                <Message messageText={alertMessage} variant={alertVariant} />
-            )}
-            <Form.Group className='d-flex justify-content-between align-items-center mt-5 fs-5 lh-base' controlId="formBasicaddress">
-                <Form.Label className='w-50 text-start ms-2'>Address</Form.Label>
-                <Form.Control
-                    className='w-50'
-                    type="text"
-                    name="address"
-                    {...register('address')}
-                    isInvalid={!!errors.address}
-                />
-            </Form.Group>
-            {errors.address && <Form.Text className="text-danger m-1 position-absolute start-50 "  >{errors.address.message}</Form.Text>}
-
-            <Form.Group className='d-flex justify-content-between align-items-center mt-5 fs-5 lh-base' controlId="formBasicaddress">
-                <Form.Label className='w-50 text-start ms-2'>city</Form.Label>
-                <Form.Control
-                    className='w-50'
-                    type="text"
-                    name="city"
-                    {...register('city')}
-                    isInvalid={!!errors.city}
-                />
-            </Form.Group>
-            {errors.city && <Form.Text className="text-danger m-1 position-absolute start-50 "  >{errors.city.message}</Form.Text>}
-
-            <Form.Group className='d-flex justify-content-between align-items-center mt-5 fs-5 lh-base' controlId="formBasicaddress">
-                <Form.Label className='w-50 text-start ms-2'>Postal Code</Form.Label>
-                <Form.Control
-                    className='w-50'
-                    type="text"
-                    name="postalCode"
-                    {...register('postalCode')}
-                    isInvalid={!!errors.postalCode}
-                />
-            </Form.Group>
-            {errors.postalCode && <Form.Text className="text-danger m-1 position-absolute start-50 "  >{errors.postalCode.message}</Form.Text>}
-
-            <Form.Group className='d-flex justify-content-between align-items-center mt-5 fs-5 lh-base' controlId="formBasicaddress">
-                <Form.Label className='w-50 text-start ms-2'>Country</Form.Label>
-                <Form.Control
-                    className='w-50'
-                    type="text"
-                    name="country"
-                    {...register('country')}
-                    isInvalid={!!errors.country}
-                />
-            </Form.Group>
-            {errors.country && <Form.Text className="text-danger m-1 position-absolute start-50 "  >{errors.country.message}</Form.Text>}
-
-            <Form.Group className='d-flex justify-content-between align-items-center mt-5 fs-5 lh-base' controlId="formBasicaddress">
-                <Form.Label className='w-50 text-start ms-2'>Phone number</Form.Label>
-                <Form.Control
-                    className='w-50'
-                    type="text"
-                    name="phone"
-                    {...register('phone')}
-                    isInvalid={!!errors.phone}
-                />
-            </Form.Group>
-            {errors.phone && <Form.Text className="text-danger m-1 position-absolute start-50 "  >{errors.phone.message}</Form.Text>}
-
-
-            {
-                loading ? (
-                    <div class="spinner-border text-primary mt-2" role="status">
-                        {/* <span class="sr-only">Loading...</span> */}
-                    </div>
-                ) : (
-                    <Button className="btn buttons mt-5" type="submit">
-                        Continue to payment
-                    </Button>
+        <Container>
+            <StepsHeader>
+                <Breadcrumb.Item > <Link to='/shipping' className="text-reset text-decoration-none"> Shipping </Link></Breadcrumb.Item>
+                <Breadcrumb.Item active> Payment </Breadcrumb.Item>
+                <Breadcrumb.Item active>Order</Breadcrumb.Item>
+            </StepsHeader>
+            <Form onSubmit={handleSubmit(onSubmit)} className='m-2 text-light'>
+                {alertVariant && (
+                    <Message messageText={alertMessage} variant={alertVariant} />
                 )}
-            {error && <Form.Text className="text-danger m-1 position-absolute start-50 "  > <TiWarningOutline />  {error}</Form.Text>}
+                <Form.Group className='d-flex justify-content-between align-items-center mt-5 fs-5 lh-base' controlId="formBasicaddress">
+                    <Form.Label className='w-50 text-start ms-2'>Address</Form.Label>
+                    <Form.Control
+                        className='w-50'
+                        type="text"
+                        name="address"
+                        {...register('address')}
+                        isInvalid={!!errors.address}
+                    />
+                </Form.Group>
+                {errors.address && <Form.Text className="text-danger m-1 position-absolute start-50 "  >{errors.address.message}</Form.Text>}
 
-        </Form>
+                <Form.Group className='d-flex justify-content-between align-items-center mt-5 fs-5 lh-base' controlId="formBasicaddress">
+                    <Form.Label className='w-50 text-start ms-2'>city</Form.Label>
+                    <Form.Control
+                        className='w-50'
+                        type="text"
+                        name="city"
+                        {...register('city')}
+                        isInvalid={!!errors.city}
+                    />
+                </Form.Group>
+                {errors.city && <Form.Text className="text-danger m-1 position-absolute start-50 "  >{errors.city.message}</Form.Text>}
+
+                <Form.Group className='d-flex justify-content-between align-items-center mt-5 fs-5 lh-base' controlId="formBasicaddress">
+                    <Form.Label className='w-50 text-start ms-2'>Postal Code</Form.Label>
+                    <Form.Control
+                        className='w-50'
+                        type="text"
+                        name="postalCode"
+                        {...register('postalCode')}
+                        isInvalid={!!errors.postalCode}
+                    />
+                </Form.Group>
+                {errors.postalCode && <Form.Text className="text-danger m-1 position-absolute start-50 "  >{errors.postalCode.message}</Form.Text>}
+
+                <Form.Group className='d-flex justify-content-between align-items-center mt-5 fs-5 lh-base' controlId="formBasicaddress">
+                    <Form.Label className='w-50 text-start ms-2'>Country</Form.Label>
+                    <Form.Control
+                        className='w-50'
+                        type="text"
+                        name="country"
+                        {...register('country')}
+                        isInvalid={!!errors.country}
+                    />
+                </Form.Group>
+                {errors.country && <Form.Text className="text-danger m-1 position-absolute start-50 "  >{errors.country.message}</Form.Text>}
+
+                <Form.Group className='d-flex justify-content-between align-items-center mt-5 fs-5 lh-base' controlId="formBasicaddress">
+                    <Form.Label className='w-50 text-start ms-2'>Phone number</Form.Label>
+                    <Form.Control
+                        className='w-50'
+                        type="text"
+                        name="phone"
+                        {...register('phone')}
+                        isInvalid={!!errors.phone}
+                    />
+                </Form.Group>
+                {errors.phone && <Form.Text className="text-danger m-1 position-absolute start-50 "  >{errors.phone.message}</Form.Text>}
+
+
+                {
+                    loading ? (
+                        <div class="spinner-border text-primary mt-2" role="status">
+                            {/* <span class="sr-only">Loading...</span> */}
+                        </div>
+                    ) : (
+                        <Button className="btn buttons mt-5" type="submit">
+                            Continue to payment
+                        </Button>
+                    )}
+                {error && <Form.Text className="text-danger m-1 position-absolute start-50 "  > <TiWarningOutline />  {error}</Form.Text>}
+
+            </Form>
+        </Container>
     )
 }
 

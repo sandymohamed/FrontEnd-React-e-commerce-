@@ -3,12 +3,13 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { Form, Button, Col, Row, Container, Card } from 'react-bootstrap';
+import { Form, Button, Col, Row, Container, Card, Breadcrumb } from 'react-bootstrap';
 import PaymentButton from '../PaymentButton';
 import '../../App.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { orderSlice,  } from '../../redux/reducers/orderSlice';
-import { useNavigate } from 'react-router-dom';
+import { orderSlice, } from '../../redux/reducers/orderSlice';
+import { Link, useNavigate } from 'react-router-dom';
+import StepsHeader from '../StepsHeader';
 // --------------------------------------------------------------------
 
 const schema = yup.object().shape({
@@ -34,7 +35,7 @@ const PaymentForm = () => {
   const selectedPaymentOption = watch('paymentOption');
 
 
-// order details:
+  // order details:
 
 
 
@@ -62,79 +63,87 @@ const PaymentForm = () => {
 
   useEffect(() => {
 
-    console.log("xxxxx", selectedPaymentOption,);
+    console.log("selectedPaymentOption", selectedPaymentOption,);
 
   }, []);
 
   return (
-    <Container className='d-flex justify-content-center align-items-center ' style={{ height: ' 100vh' }}>
-      <Card className="w-75 text-start align-items-center text-light bg-dark card-box-border " >
-        <Card.Header className='h2 text-bold'>Payment</Card.Header>
-        <Card.Body>
-          {/* <Card.Title className='h1  text-light text-bold'>  Payment </Card.Title> */}
-          <Card.Text>
-            All transactions are secure and encrypted.
-          </Card.Text>
+    <Container>
+
+      <StepsHeader>
+        <Breadcrumb.Item > <Link to='/shipping'> Shipping </Link></Breadcrumb.Item>
+        <Breadcrumb.Item active> <Link to='/payment'> Payment </Link> </Breadcrumb.Item>
+        <Breadcrumb.Item active>Order</Breadcrumb.Item>
+      </StepsHeader>
+      <Container className='d-flex justify-content-center align-items-center ' style={{ height: ' 80vh' }}>
+        <Card className="w-75 text-start align-items-center text-light bg-dark card-box-border " >
+          <Card.Header className='h2 text-bold'>Payment</Card.Header>
+          <Card.Body>
+            {/* <Card.Title className='h1  text-light text-bold'>  Payment </Card.Title> */}
+            <Card.Text>
+              All transactions are secure and encrypted.
+            </Card.Text>
 
 
-          <Form onSubmit={handleSubmit(onSubmit)} className='mb-5 text-light'>
-            <Row>
+            <Form onSubmit={handleSubmit(onSubmit)} className='mb-5 text-light'>
+              <Row>
 
-              <Col sm={10}>
-                <Form.Group>
-                  <Form.Check
-                    inline
-                    type="radio"
-                    id="cash"
-                    name="cash"
-                    value="cash"
-                    {...register('paymentOption')}
+                <Col sm={10}>
+                  <Form.Group>
+                    <Form.Check
+                      inline
+                      type="radio"
+                      id="cash"
+                      name="cash"
+                      value="cash"
+                      {...register('paymentOption')}
 
-                  /> <Form.Label>Pay Cash</Form.Label>
+                    /> <Form.Label>Pay Cash</Form.Label>
 
-                </Form.Group>
-                <Form.Group>
-                  <Form.Check
-                    inline
-                    type="radio"
-                    id="card"
-                    name="card"
-                    value="card"
-                    {...register('paymentOption')}
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Check
+                      inline
+                      type="radio"
+                      id="card"
+                      name="card"
+                      value="card"
+                      {...register('paymentOption')}
 
-                  /> <Form.Label>Using Card</Form.Label>
+                    /> <Form.Label>Using Card</Form.Label>
 
-                </Form.Group>
-                <Form.Group>
-                  <Form.Check
-                    inline
-                    type="radio"
-                    id="paypal"
-                    name="paypal"
-                    value="paypal"
-                    {...register('paymentOption')}
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Check
+                      inline
+                      type="radio"
+                      id="paypal"
+                      name="paypal"
+                      value="paypal"
+                      {...register('paymentOption')}
 
-                  /> <Form.Label>Using PayPal</Form.Label>
+                    /> <Form.Label>Using PayPal</Form.Label>
 
-                </Form.Group>
-                {errors && (
-                  <div className="text-danger">{errors.message}</div>
-                )}
-              </Col>
+                  </Form.Group>
+                  {errors && (
+                    <div className="text-danger">{errors.message}</div>
+                  )}
+                </Col>
 
-            </Row>
-            <Button type="submit" className='btn buttons mt-5 '>  {selectedPaymentOption === 'cash' ? 'Complete Order' : ' Pay Now'}</Button>
+              </Row>
+              <Button type="submit" className='btn buttons mt-5 '>  {selectedPaymentOption === 'cash' ? 'Complete Order' : ' Pay Now'}</Button>
 
-          </Form>
-        </Card.Body>
+            </Form>
+          </Card.Body>
 
 
 
-        {/* <Card.Footer style={{ display: (selectedPaymentOption === 'card' || selectedPaymentOption === 'paypal') ? 'block' : 'none' }}>
+          {/* <Card.Footer style={{ display: (selectedPaymentOption === 'card' || selectedPaymentOption === 'paypal') ? 'block' : 'none' }}>
         </Card.Footer> */}
-      </Card>
-    </Container>
+        </Card>
+      </Container>
 
+    </Container>
   );
 
 };

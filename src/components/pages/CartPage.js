@@ -2,12 +2,14 @@ import '../../App.scss';
 import React, { useEffect, useState, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { addItem, removeItem, clearCart, selectTotalQuantity, selectTotal, removeCart, selectCartitems, removeItemFromCart, getCartDetails } from '../../redux/reducers/cartSlice';
 import { PageNameContext } from '../../App';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 import { fetchUserData, selectUser } from '../../redux/reducers/userSlice';
+import StepsHeader from '../StepsHeader';
 
 // -------------------------------------------------------------------------------------
 const StyledCard = styled.div`
@@ -76,9 +78,11 @@ const CartPage = () => {
     dispatch(removeItemFromCart(item));
   };
 
-  const handleClearCart = () => {
-    dispatch(removeCart());
-    // console.log('clear');
+  const handleClearCart = (user) => {
+
+    console.log('clear: ', user);
+    dispatch(removeCart(user));
+    console.log('clear');
 
   };
 
@@ -86,6 +90,7 @@ const CartPage = () => {
 
     if (user) {
 
+      console.log(user);
       dispatch(getCartDetails(user._id))
     }
 
@@ -128,6 +133,11 @@ const CartPage = () => {
 
   return (
     <Container align='left' >
+      <StepsHeader>
+        <Breadcrumb.Item active> Shipping</Breadcrumb.Item>
+        <Breadcrumb.Item active> Payment </Breadcrumb.Item>
+        <Breadcrumb.Item active>Order</Breadcrumb.Item>
+      </StepsHeader>
       <Row xs={12} >
         <Col xs={6}>
           <p className='fs-2 mt-2 text-light'> My Cart:</p>
@@ -135,13 +145,19 @@ const CartPage = () => {
         <Col xs={6} className='d-flex justify-content-end align-items-center'>
           {/* <Row> */}
           <p className='fs-4 m-1 text-light'>{totalQuantity} {totalQuantity > 1 ? 'items' : 'item'}</p>
-          <Button variant="outline-danger" ><RiDeleteBin5Fill className='mb-1' /> Clear Cart</Button>
+          <Button
+            onClick={() => handleClearCart(user._id)}
+            variant="outline-danger"
+          >
+            <RiDeleteBin5Fill className='mb-1' />
+            Clear Cart
+          </Button>
           {/* </Row> */}
 
         </Col>
       </Row>
       <Row>
-        <Col xs={12} sm={8}>
+        <Col xs={12} md={8}>
           {items.length ?
             items.map((item, index) => (
               <Card key={index} className='w-100 d-flex flex-row m-2 box-border cart-card ' style={{ height: '20vh' }}>
@@ -149,27 +165,27 @@ const CartPage = () => {
                 <Link to={`/product/${item._id}`} >
                   <Card.Img variant="top" src={item.image} className='h-100 rounded' />
                 </Link>
-                  {item.image}
 
-                <Card.Body className='pb-1 d-flex justify-content-between'>
 
-                  <div>
+                <Card.Body className='row pb-1 d-flex justify-content-between'>
+
+                  <Col xs={7} md={6} lg={8}>
 
                     <Card.Title align='start'>{item.name}</Card.Title>
 
                     {item.oldPrice ? <>
-                      <Card.Text align='start' className='text-light fs-3 text-nowrap' > <span className='text-decoration-line-through fs-6 text-dark'> {`${item.oldPrice} $`}</span>  {`${item.price} $`} </Card.Text>
+                      <Card.Text align='start' className='text-light fs-3 text-nowrap' > <span className='text-decoration-line-through fs-6 text-dark'> {`${item?.oldPrice} $`}</span>  {`${item?.price} $`} </Card.Text>
 
                     </>
                       :
-                      <Card.Text align='start' className='text-light fs-3' >{`${item.price} $`}</Card.Text>
+                      <Card.Text align='start' className='text-light fs-3' >{`${item?.price} $`}</Card.Text>
                     }
 
-                  </div>
+                  </Col>
 
-                  <div className="d-flex align-items-center mb-1 rounded text-light bg-warning" style={{ width: '15%', height: '5vh', }}>
+                  <Col xs={5} md={6} lg={3} className="d-flex align-items-center mb-1 pe-1 rounded text-light bg-orange" style={{ height: '5vh', }}>
                     <button
-                      className="btn count-btn  "
+                      className="btn count-btn  bg-orange-hover"
                       onClick={() => {
                         handleRemoveFromCart(item)
                         decrementQuantity(item.quantity, item._id)
@@ -181,7 +197,7 @@ const CartPage = () => {
 
                     <span className="fs-4  border border-top-0 border-bottom-0 ps-1 pe-1">{item.quantity}</span>
                     <button
-                      className="btn count-btn"
+                      className="btn count-btn bg-orange-hover"
                       onClick={() => {
                         handleAddToCart(item)
                         incrementQuantity(item.quantity, item.countInStock, item._id)
@@ -192,15 +208,15 @@ const CartPage = () => {
                     </button>
 
 
-                  </div>
-                  <div className='d-block text-light position-absolute bottom-0 end-0 me-2' >
-                    {item.quantity} * {item.price} =
+                    <Row className='d-block text-light position-absolute bottom-0 end-0 me-2' >
+                      {item.quantity} * {item.price} =
 
-                    <span className={` total-price ${animate ? 'animate' : ''}`} >
-                      {renderDigits(Math.ceil(item.totalPrice))}
-                    </span>
+                      <span className={` total-price ${animate ? 'animate' : ''}`} >
+                        {renderDigits(Math.ceil(item.totalPrice))}
+                      </span>
 
-                  </div>
+                    </Row>
+                  </Col>
 
                 </Card.Body>
               </Card>
@@ -214,7 +230,7 @@ const CartPage = () => {
 
           <hr />
         </Col>
-        <Col xs={12} sm={4}>
+        <Col xs={12} md={4}>
           <Card className='w-100 mt-2 p-2  box-border cart-card'>
 
             <Card.Title className='fs-3 text-light'> Order Summary : </Card.Title>
@@ -226,7 +242,7 @@ const CartPage = () => {
             </Card.Text>
 
             <Card.Text className='fs-5 text-light'> Shipping :
-              <span className='ms-2 ' >
+              <span className='ms-2 fs-6' >
                 Calculated at checkout
 
               </span>
@@ -244,6 +260,7 @@ const CartPage = () => {
 
       </Row>
     </Container>
+ 
   );
 };
 

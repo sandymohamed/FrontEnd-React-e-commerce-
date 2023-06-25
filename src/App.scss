@@ -60,6 +60,17 @@ $Coloryellow: #E78A00;
 .yellow-text {
   color: $Coloryellow;
 }
+.bg-orange {
+  background-color: $Coloryellow;
+  
+}
+.bg-orange-hover {
+
+  &:hover{
+    background-color: #bb7307;
+  }
+
+}
 
 .box-border {
   border: none;

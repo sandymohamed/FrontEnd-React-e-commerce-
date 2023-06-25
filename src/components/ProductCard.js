@@ -54,7 +54,6 @@ const ProductCard = ({ product }) => {
 
 
   const handleAddToCart = (item) => {
-    
     const data = {user: user._id, ...item}
     dispatch(addCart(data));
   };
