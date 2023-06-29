@@ -18,6 +18,7 @@ import ProfilePage from "./ProfilePage";
 import Shipping from "./Shipping";
 import PaymentPage from "./PaymentPage";
 import OrdersPage from "./OrdersPage";
+import Test from "./Test";
 // -------------------------------------------------------------------------------------
 
 const router = (isAuth) => createBrowserRouter([
@@ -33,6 +34,9 @@ const router = (isAuth) => createBrowserRouter([
       {
         path: "/products",
         element: <Products />,
+      },{
+        path: "/test",
+        element: <Test />,
       },
       {
         path: "/product/:id",

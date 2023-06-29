@@ -41,6 +41,16 @@ export const fetchProducts = () => async dispatch => {
   }
 };
 
+export const postProduct = (data) => async dispatch => {
+  try {
+    dispatch(setLoading());
+    const response = await AxiosInstance.post('/api/products/', data);
+    dispatch(setProducts(response.data));
+  } catch (error) {
+    dispatch(setError(error.message));
+  }
+};
+
 export const selectProducts = state => state.products.products;
 export const selectLoading = state => state.products.loading;
 export const selectError = state => state.products.error;

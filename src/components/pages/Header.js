@@ -23,7 +23,7 @@ const navLinks = [
   { title: 'Home', link: '/' },
   { title: 'Products', link: 'products' },
   { title: 'profile', link: 'profile' },
-  { title: 'payment', link: 'payment' },
+  { title: 'test', link: 'test' },
   { title: 'error', link: 'ffff' },
   { title: '', link: '' },
 ]
