@@ -6,8 +6,8 @@ import UpdateProfilePage from './UpdateProfilePage'
 // --------------------------------------------------------------------
 
 const myTabs = [
-    {href: "profile", title: "Profile Details",active: '' , component:<ProfileDetailsPage />},
-    {href: "update-account", title: "Update Account",active: '' , component: <UpdateProfilePage /> },
+    {href: "profile", title: "Profile Details", active: '' , component:<ProfileDetailsPage />},
+    {href: "update-account", title: "Update Account", active: '' , component: <UpdateProfilePage /> },
  
 ]
 // --------------------------------------------------------------------

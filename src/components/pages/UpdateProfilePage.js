@@ -68,7 +68,7 @@ const UpdateProfile = () => {
     }, [user])
 
     return (
-        <Form onSubmit={handleSubmit(onSubmit)} className='position-relative'>
+        <Form onSubmit={handleSubmit(onSubmit)} className='w-100 text-start'>
             {alertVariant && (
                 <Message messageText={alertMessage} variant={alertVariant} />
             )}
@@ -143,9 +143,11 @@ const UpdateProfile = () => {
                     <div class="spinner-border text-primary mt-2" role="status">
                     </div>
                 ) : (
-                    <button className="btn buttons mt-5" type="submit">
+                    <div className="w-50 position-relative bottom-0 start-50 mt-5 overflow-hidden">
+                    <button className=" w-25 btn buttons " type="submit">
                         Update Profile
                     </button>
+                 </div>
                 )}
             {error && <Form.Text className="fs-4 text-danger d-block"> <TiWarningOutline /> {error}</Form.Text>}
 

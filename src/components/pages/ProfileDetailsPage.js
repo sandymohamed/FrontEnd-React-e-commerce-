@@ -12,21 +12,21 @@ export default function ProfileDetailsPage() {
 
 
   return (
-    <Container>
+    <Container className=' p-2'>
         <Row className='row-data '>
-            <Col xs={12} sm={4}>first name: </Col>
+            <Col xs={12} sm={4} className='text-capitalize' >first name: </Col>
             <Col xs={12} sm={8}>{user?.firstName}</Col>
         </Row>
         <Row className='row-data '>
-            <Col xs={12} sm={4}>last name: </Col>
+            <Col xs={12} sm={4} className='text-capitalize' >last name: </Col>
             <Col xs={12} sm={8}>{user?.lastName}</Col>
         </Row>
         <Row className='row-data '>
-            <Col xs={12} sm={4}>email: </Col>
+            <Col xs={12} sm={4} className='text-capitalize' >email: </Col>
             <Col xs={12} sm={8}>{user?.email}</Col>
         </Row>
         <Row className='row-data '>
-            <Col xs={12} sm={4}> User type:  </Col>
+            <Col xs={12} sm={4} className='text-capitalize' > User type:  </Col>
             <Col xs={12} sm={8}>{user?.isAdmin ? 'Admin': 'Customer'}</Col>
         </Row>
   

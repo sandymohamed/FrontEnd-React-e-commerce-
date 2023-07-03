@@ -63,7 +63,7 @@ const HomePage = () => {
                     </Row>
 
                     {products?.slice(0, 4)?.map((product) => (
-                      <Col key={product?._id} xs={6} md={4} lg={3} className='mt-2'>
+                      <Col key={product?._id} xs={6} md={4} lg={3} className='mt-2 h-50'>
                         <ProductCard product={product} />
                       </Col>
                     ))}
@@ -81,7 +81,7 @@ const HomePage = () => {
                     </Row>
 
                     {products?.slice(-6)?.map((product) => (
-                      <Col key={product?._id} xs={6} md={4} lg={3} className='mt-2'>
+                      <Col key={product?._id} xs={6} md={4} lg={3} className='mt-2 h-50'>
                         <ProductCard product={product} />
                       </Col>
                     ))}

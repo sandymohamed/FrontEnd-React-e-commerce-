@@ -9,6 +9,7 @@ import { selectUser } from '../redux/reducers/userSlice';
 // --------------------------------------------------------------------
 
 const StyledCard = styled.div`
+
 background-color: white;
 border:none;
 border-radius: 10px;
@@ -17,7 +18,8 @@ box-shadow:  -.6rem .6rem .6rem rgba(0, 0, 0, 0.4);
 `;
 
 const StyledImg = styled.img`
-height: 90%; width:100%;
+height:100%;
+width:100%;
 border: none;
 border-radius: 10px;
 
@@ -73,18 +75,18 @@ const ProductCard = ({ product }) => {
   }, [dispatch, quantity]);
 
   return (
-    <Card className='box-border'>
-      <Link to={`/product/${_id}`}>
+    <Card className='box-border h-100'>
+      <Link to={`/product/${_id}`} style={{height: '40vh'}}>
         <StyledImg variant="top" src={image}  />
       </Link>
       <StyledBody>
 
         <Row>
-        <Col>
+        <Col md={6}> 
         <Card.Title align="start" className='ps-1 brand text-nowrap'>{name}</Card.Title>
          </Col>
           
-          <Col>
+          <Col  md={6}> 
             <Card.Text><Rating value={rating} /></Card.Text>
           </Col>
         </Row>

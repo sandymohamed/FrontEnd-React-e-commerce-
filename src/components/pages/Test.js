@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import AxiosInstance from '../../axiosInstance';
 
 const Test = () => {
@@ -28,14 +27,19 @@ const Test = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('image', selectedFile);
-    for (const key in productData) {
-      formData.append(key, productData[key]);
-    }
+    // const formData = new FormData();
+    // formData.append('image', selectedFile);
+    // for (const key in productData) {
+    //   formData.append(key, productData[key]);
+    // }
 
+    // console.log(formData);
+    console.log(productData);
+    console.log(selectedFile);
+    const data = {...productData, image: selectedFile}
+    console.log( 'DD',data);
     try {
-      const response = await AxiosInstance.post('/api/products', formData, {
+      const response = await AxiosInstance.post('/api/products', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

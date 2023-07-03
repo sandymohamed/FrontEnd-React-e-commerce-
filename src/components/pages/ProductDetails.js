@@ -12,23 +12,12 @@ const ProductDetails = () => {
 
   const [product, setProduct] = useState(null);
 
-  const [quantity, setQuantity] = useState(1);
-
-  const incrementQuantity = () => {
-    if (quantity < product.countInStock) {
-      setQuantity(prevQuantity => prevQuantity + 1);
-    }
-  };
-
-  const decrementQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(prevQuantity => prevQuantity - 1);
-    }
-  };
+ 
 
   const { pageName, setPageName } = useContext(PageNameContext)
 
   useEffect(() => {
+
     AxiosInstance.get(`/api/products/${id}`)
       .then(response => {
         setProduct(response.data);
@@ -39,7 +28,7 @@ const ProductDetails = () => {
       });
 
       setPageName(product?.name)
-  }, [id, quantity]);
+  }, [id, product]);
 
   
   if (!product) {
@@ -61,25 +50,8 @@ const ProductDetails = () => {
           <p>{product.description}</p>
           <p>Price: {product.price}</p>
 
-          <div className="d-flex align-items-center">
-          <button
-            className="btn btn-primary me-2"
-            onClick={decrementQuantity}
-            disabled={quantity === 1}
-          >
-            -
-          </button>
-          <span className="me-2">Qty: {quantity}</span>
-          <button
-            className="btn btn-primary"
-            onClick={incrementQuantity}
-            disabled={quantity >= product.countInStock}
-          >
-            +
-          </button>
-
+ 
           <button className={product.countInStock >= 0 ? 'btn buttons ms-auto' : 'btn btn-muted ms-auto'} disabled={product.countInStock <= 0}>Add to Cart</button>
-        </div>
 
 
         </Col>
