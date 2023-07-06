@@ -79,10 +79,7 @@ const CartPage = () => {
   };
 
   const handleClearCart = (user) => {
-
-    console.log('clear: ', user);
     dispatch(removeCart(user));
-    console.log('clear');
 
   };
 
@@ -90,8 +87,7 @@ const CartPage = () => {
 
     if (user) {
 
-      console.log(user);
-      dispatch(getCartDetails(user._id))
+      dispatch(getCartDetails())
     }
 
     setPageName('Cart')

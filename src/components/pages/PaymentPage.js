@@ -7,9 +7,10 @@ import { Form, Button, Col, Row, Container, Card, Breadcrumb } from 'react-boots
 import PaymentButton from '../PaymentButton';
 import '../../App.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { orderSlice, } from '../../redux/reducers/orderSlice';
+import { addOrder, orderSlice, selectPaymentMethods, selectShihppingAddress, } from '../../redux/reducers/orderSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import StepsHeader from '../StepsHeader';
+import { removeItemFromCart, selectCartitems, selectTotal } from '../../redux/reducers/cartSlice';
 // --------------------------------------------------------------------
 
 const schema = yup.object().shape({
@@ -22,8 +23,14 @@ const PaymentForm = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  // const paymentStatus = useSelector(selectPaymentMethods);
+  
   const { setPaymentMethods } = orderSlice.actions;
+
+  const products = useSelector(selectCartitems);
+  const totalPrice = useSelector(selectTotal);
+  const shihppingAddress = useSelector(selectShihppingAddress);
+  const paymentMethods = useSelector(selectPaymentMethods);
+
 
 
   const { register, handleSubmit, errors, watch, formState } = useForm({
@@ -44,11 +51,31 @@ const PaymentForm = () => {
 
 
   const onSubmit = async (data) => {
-    console.log(data);
 
     await dispatch(setPaymentMethods(data.paymentOption))
 
+
+    const order = {
+      products: [ ...products] ,
+      shippingAddress: { ...shihppingAddress },
+      paymentMethods: data.paymentOption,
+      totalPrice: totalPrice,
+      taxPrice: .5,
+      shippingPrice: 5,
+      isPaid: data.paymentOption === "cash" ? false : true,
+      paidAt: data.paymentOption === "cash" ? null : new Date(),
+      deliveredAt: "",
+
+
+    }
+
+    console.log("front order: ", order);
+
     if (data.paymentOption === 'cash') {
+
+      dispatch(addOrder(order));
+      dispatch(removeItemFromCart());
+
       navigate('/orders')
     } else {
       navigate('/checkout')
@@ -62,8 +89,6 @@ const PaymentForm = () => {
 
 
   useEffect(() => {
-
-    console.log("selectedPaymentOption", selectedPaymentOption,);
 
   }, []);
 

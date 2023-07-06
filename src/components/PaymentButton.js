@@ -4,8 +4,8 @@ import {
 } from "@paypal/react-paypal-js";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addPaymentResult, selectError, selectLoading } from "../redux/reducers/orderSlice";
-import { selectTotal, selectTotalQuantity } from "../redux/reducers/cartSlice";
+import { addOrder, addPaymentResult, selectError, selectLoading, selectPaymentMethods, selectShihppingAddress } from "../redux/reducers/orderSlice";
+import { removeItemFromCart, selectCartitems, selectTotal, selectTotalQuantity } from "../redux/reducers/cartSlice";
 import { useNavigate } from "react-router-dom";
 
 const ID = "AcdIue6OSWJoAFIRAmsyu4fkXqYSqY7VtLOuaGqfxq2yRrczxaDMXKLT8KGpP5D2-2_Rh-xVV54Eg3lj"
@@ -21,10 +21,10 @@ const PaymentButton = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const loading = useSelector(selectLoading);
-  const error = useSelector(selectError);
-  const totalQuantity = useSelector(selectTotalQuantity);
-  const total = useSelector(selectTotal);
+  const products = useSelector(selectCartitems);
+  const totalPrice = useSelector(selectTotal);
+  const shihppingAddress = useSelector(selectShihppingAddress);
+  const paymentMethods = useSelector(selectPaymentMethods);
 
 
   const [succeeded, setSucceeded] = useState(false);
@@ -46,14 +46,14 @@ const PaymentButton = () => {
 
   const createOrder = (data, actions) => {
     console.log('createeeeee');
-    if (total > 0) {
+    if (totalPrice > 0) {
 
       return actions.order.create({
           purchase_units: [
             {
               amount: {
                 // charge users $499 per order
-                value: total,
+                value: totalPrice,
                 // description: `${totalQuantity} items from ShopIn store`
               },
             },
@@ -77,34 +77,20 @@ const PaymentButton = () => {
     }
   };
 
-  // const onApprove = (data, actions) => {
-  //   navigate('/orders')
-  //   console.log('aproove data: ', data,'actions: ', actions);
-    
-  //   return actions.order.capture().then(function (details) {
-  //     console.log('aproovessssssssss', details);
 
-  //     const { payer } = details;
-  //     setBillingDetails(payer);
-  //     setSucceeded(true);
-
-  //     dispatch(addPaymentResult(payer).then((res) => {
-  //       showMessage('Profile Updated Successfully✔', 'warning')
-  //       console.log("capture", res);
-
-  //     }).catch((error) => {
-
-  //       showMessage('error❌', error, 'danger')
-
-  //     }))
+  const order = {
+    products: [ ...products] ,
+    shippingAddress: { ...shihppingAddress },
+    paymentMethods: data.paymentOption,
+    totalPrice: totalPrice,
+    taxPrice: .5,
+    shippingPrice: 5,
+    isPaid: data.paymentOption === "cash" ? false : true,
+    paidAt: data.paymentOption === "cash" ? null : new Date(),
+    deliveredAt: "",
 
 
-  //   }).catch(err => {
-  //     setPaypalErrorMessage("Something went wrong.")
-  //     showMessage('error❌', err, 'danger')
-
-  //   })
-  // }
+  }
 
   const onApprove = (data, actions) => {
     navigate('/orders');
@@ -121,6 +107,9 @@ const PaymentButton = () => {
           .then((res) => {
             showMessage('Profile Updated Successfully✔', 'warning');
             console.log("capture", res);
+             dispatch(addOrder(order));
+             dispatch(removeItemFromCart());
+
           })
           .catch((error) => {
             showMessage('error❌', error, 'danger');

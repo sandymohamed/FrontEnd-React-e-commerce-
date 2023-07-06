@@ -5,10 +5,21 @@ import AxiosInstance from '../../axiosInstance';
 
 
 const initialState = {
-    shihppingAddress: {},
-    paymentMethods: '',
-    paymentResult: {},
-    order: {},
+
+    order: {
+        user: "",
+        products: [],
+        shihppingAddress: {},
+        paymentMethods: '',
+        paymentResult: {},
+        totalPrice: 0,
+        taxPrice: 0,
+        shippingPrice: 0,
+        isPaid: false,
+        paidAt: null,
+        status: "",
+        deliveredAt: null,
+    },
     loading: false,
     error: null,
 }
@@ -19,21 +30,20 @@ export const orderSlice = createSlice({
     initialState,
     reducers: {
         setShihppingAddress(state, action) {
-            state.shihppingAddress = action.payload;
+            state.order.shihppingAddress = action.payload;
             state.loading = false;
             state.error = null;
 
         },
         setPaymentResult(state, action) {
-            console.log(action);
-            state.paymentResult = action.payload;
+            state.order.paymentResult = action.payload;
             state.loading = false;
             state.error = null;
 
         },
         setPaymentMethods(state, action) {
-            console.log(action);
-            state.paymentMethods = action.payload;
+            console.log(state, action);
+            state.order.paymentMethods = action.payload;
             state.loading = false;
             state.error = null;
 
@@ -58,7 +68,7 @@ export const orderSlice = createSlice({
 
 })
 
-const { setShihppingAddress, setPaymentResult, setPaymentMethods ,setOrder, setLoading, setError } = orderSlice.actions;
+const { setShihppingAddress, setPaymentResult, setPaymentMethods, setOrder, setLoading, setError } = orderSlice.actions;
 
 export const addShippingAddress = (data) => async (dispatch) => {
 
@@ -88,12 +98,14 @@ export const addPaymentResult = (data) => async (dispatch) => {
 
 export const addOrder = (data) => async (dispatch) => {
 
+    console.log('order data : ', data);
+
     try {
         dispatch(setLoading());
         const response = await AxiosInstance.post('api/order/', data)
         dispatch(setOrder(response.data));
 
-
+        console.log("res: ", response);
 
     } catch (error) {
         if (error.response && error.response.status === 400) {
@@ -111,9 +123,63 @@ export const addOrder = (data) => async (dispatch) => {
     }
 };
 
-export const selectShihppingAddress = state => state?.order?.shihppingAddress;
-export const selectPaymentResult = state => state?.order?.paymentResult;
-export const selectPaymentMethods = state => state?.order?.paymentMethods;
+
+export const getOrders = () => async (dispatch) => {
+
+    console.log('order  : ' );
+
+    try {
+        dispatch(setLoading());
+        const response = await AxiosInstance.get('api/order/user' )
+        dispatch(setOrder(response.data));
+
+        console.log("res: ", response);
+
+    } catch (error) {
+        if (error.response && error.response.status === 400) {
+            // Server returned an error response with data
+            dispatch(setError('Invalid data'));
+        } else if (error.request) {
+            // Request made but no response received
+            dispatch(setError('Request failed. Please try again.'));
+
+        }
+        else {
+            // Something else happened
+            dispatch(setError('An unexpected error occurred.'));
+        }
+    }
+};
+
+
+export const deleteOrder = (id) => async (dispatch) => {
+
+    
+    try {
+        dispatch(setLoading());
+        const response = await AxiosInstance.delete(`api/order/${id}` )
+        
+        console.log('order oisd : ' + response );
+
+    } catch (error) {
+        if (error.response && error.response.status === 404) {
+            // Server returned an error response with data
+            dispatch(setError('Invalid id'));
+        } else if (error.request) {
+            // Request made but no response received
+            dispatch(setError('Request failed. Please try again.'));
+
+        }
+        else {
+            // Something else happened
+            dispatch(setError('An unexpected error occurred.'));
+        }
+    }
+};
+
+export const selectShihppingAddress = state => state?.order?.order?.shihppingAddress;
+export const selectPaymentResult = state => state?.order?.order?.paymentResult;
+export const selectPaymentMethods = state => state?.order?.order?.paymentMethods;
 
 export const selectOrder = state => state?.order?.order;
 export const selectLoading = state => state?.order?.loading;

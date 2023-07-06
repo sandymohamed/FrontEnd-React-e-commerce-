@@ -133,17 +133,12 @@ export const removeItemFromCart = (data) => async (dispatch, getState) => {
     try {
         dispatch(removeItem(data));
 
-        const cartState = getState().cart;
-        const response = await AxiosInstance.post('api/cart/', cartState);
+        const response = await AxiosInstance.delete('api/cart/');
 
     } catch (error) {
-        if (error.response && error.response.status === 400) {
-            // Server returned an error response with data
-            dispatch(setError('Invalid data'));
-        } else if (error.request) {
+        if (error.request) {
             // Request made but no response received
             dispatch(setError('Request failed. Please try again.'));
-
         }
         else {
             // Something else happened
@@ -158,7 +153,7 @@ export const getCartDetails = (user) => async (dispatch) => {
     try {
         
         // const cartState = getState().cart;
-        const response = await AxiosInstance.get(`/api/carts/user/${user}`);
+        const response = await AxiosInstance.get('/api/carts/user/');
         dispatch(setCart(response.data));
         console.log('res: ', response.data);
 
@@ -180,9 +175,9 @@ export const getCartDetails = (user) => async (dispatch) => {
 
 
 
-export const removeCart = (user) => async (dispatch) => {
+export const removeCart = () => async (dispatch) => {
     try {
-        const response = await AxiosInstance.delete(`api/carts/${user}`);
+        const response = await AxiosInstance.delete('api/carts/');
         dispatch(clearCart());
 
     } catch (error) {

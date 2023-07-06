@@ -125,41 +125,47 @@ const Header = () => {
                       lastName={user?.lastName} />}
                 >
 
-                  <NavDropdown.Item  >
-                    {/* <Nav.Link   className='text-dark'>
+                    <NavDropdown.Item>
+                      <Nav.Link >
+                        <Link
+                          to='/orders'
+                          className='text-reset text-decoration-none text-dark'
+                          onClick={() => setActiveLink('Orders')}>
+                          <p className='text-decoration-none text-dark p-0'>
+                            My Orders
+                          </p>
+                        </Link>
+                      </Nav.Link>
+                    </NavDropdown.Item>
+
+                    <NavDropdown.Item  >
+                    <Nav.Link >
                       <Link
                         to='/profile'
                         className='text-reset text-decoration-none text-dark'
-                      >
-                        Profile
+                        onClick={() => setActiveLink('Profile')}>
+                        <p className='text-decoration-none text-dark p-0'>
+                          Account details
+                        </p>
                       </Link>
-                    </Nav.Link> */}
-
-                    <Nav.Link >
-                    <Link
-                        to='/profile'
-                        className='text-reset text-decoration-none text-dark'
-                      onClick={() => setActiveLink('Profile')}>
-                      <p className='text-decoration-none text-dark p-0'>
-                      Account details
-                      </p>
-                    </Link>
-                  </Nav.Link>
+                    </Nav.Link>
                   </NavDropdown.Item>
 
                   <NavDropdown.Item>
-                    <Nav.Link   className='text-dark'>
+                    <Nav.Link className='text-dark'>
                       <Link
                         to={'/login'}
                         className='text-reset text-decoration-none text-dark'
                         onClick={() => dispatch(logout())}
                       >
-                      <p className='text-decoration-none text-dark p-0'>
-                        logOut
+                        <p className='text-decoration-none text-dark p-0'>
+                          logOut
                         </p>
                       </Link>
                     </Nav.Link>
                   </NavDropdown.Item>
+
+
                 </NavDropdown>
               )
               :
