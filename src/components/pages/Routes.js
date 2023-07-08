@@ -8,7 +8,7 @@ import {
 import MainLayout from "../MainLayout";
 import Error404 from "./Error404";
 import HomePage from "./HomePage";
-import Products from "./Products";
+import Products from "./ProductsPage";
 import ProductDetails from "./ProductDetails";
 import CartPage from "./CartPage";
 import Login from "./Login";

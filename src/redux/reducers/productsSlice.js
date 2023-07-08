@@ -1,10 +1,10 @@
-import {  createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import AxiosInstance from '../../axiosInstance';
 // --------------------------------------------------------------------
 
 const initialState = {
   products: [],
-  
+
   loading: false,
   error: null,
 };
@@ -36,6 +36,33 @@ export const fetchProducts = () => async dispatch => {
     dispatch(setLoading());
     const response = await AxiosInstance.get('/api/products/');
     dispatch(setProducts(response.data));
+  } catch (error) {
+    dispatch(setError(error.message));
+  }
+};
+
+export const fetchProductsByCategory = (cat) => async dispatch => {
+ console.log(cat);
+  try {
+    dispatch(setLoading());
+    let response;
+
+    cat ?
+     response = await AxiosInstance.get(`/api/products/category/${cat}`)
+    : 
+     response = await AxiosInstance.get('/api/products/')
+
+    dispatch(setProducts(response.data));
+  } catch (error) {
+    dispatch(setError(error.message));
+  }
+};
+
+export const getCategoriesNames = () => async dispatch => {
+  try {
+    const response = await AxiosInstance.get('/api/products/all-categories/');
+    return response.data;
+
   } catch (error) {
     dispatch(setError(error.message));
   }

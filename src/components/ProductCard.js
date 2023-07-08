@@ -87,7 +87,7 @@ const ProductCard = ({ product }) => {
          </Col>
           
           <Col  md={6}> 
-            <Card.Text><Rating value={rating} /></Card.Text>
+            {/* <Card.Text><Rating value={rating} /></Card.Text> */}
           </Col>
         </Row>
 
