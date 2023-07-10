@@ -5,7 +5,7 @@ import {
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addOrder, addPaymentResult, selectError, selectLoading, selectPaymentMethods, selectShihppingAddress } from "../redux/reducers/orderSlice";
-import { removeItemFromCart, selectCartitems, selectTotal, selectTotalQuantity } from "../redux/reducers/cartSlice";
+import { removeCart, selectCartitems, selectTotal, } from "../redux/reducers/cartSlice";
 import { useNavigate } from "react-router-dom";
 
 const ID = "AcdIue6OSWJoAFIRAmsyu4fkXqYSqY7VtLOuaGqfxq2yRrczxaDMXKLT8KGpP5D2-2_Rh-xVV54Eg3lj"
@@ -108,7 +108,7 @@ const PaymentButton = () => {
             showMessage('Profile Updated Successfully✔', 'warning');
             console.log("capture", res);
              dispatch(addOrder(order));
-             dispatch(removeItemFromCart());
+             dispatch(removeCart());
 
           })
           .catch((error) => {

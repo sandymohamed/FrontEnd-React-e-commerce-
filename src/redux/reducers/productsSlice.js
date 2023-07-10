@@ -36,13 +36,32 @@ export const fetchProducts = () => async dispatch => {
     dispatch(setLoading());
     const response = await AxiosInstance.get('/api/products/');
     dispatch(setProducts(response.data));
+
+   
+
   } catch (error) {
-    dispatch(setError(error.message));
+    console.log("err", error);
+    dispatch(setError(error?.response?.data?.message))
+
   }
 };
 
+export const searchProducts = (name) => async dispatch => {
+  try {
+    dispatch(setLoading());
+    const response = await AxiosInstance.get(`/api/products/name/${name}`);
+    dispatch(setProducts(response.data));
+
+   
+  } catch (error) {
+    console.log("err", error);
+    dispatch(setError(error?.response?.data?.message))
+
+  }
+};
+
+
 export const fetchProductsByCategory = (cat) => async dispatch => {
- console.log(cat);
   try {
     dispatch(setLoading());
     let response;
@@ -53,8 +72,33 @@ export const fetchProductsByCategory = (cat) => async dispatch => {
      response = await AxiosInstance.get('/api/products/')
 
     dispatch(setProducts(response.data));
+
+   
   } catch (error) {
-    dispatch(setError(error.message));
+    console.log("err", error);
+    dispatch(setError(error?.response?.data?.message))
+
+  }
+};
+
+export const fetchProductsByBrand = (brand) => async dispatch => {
+ console.log("bbbb", brand);
+  try {
+    dispatch(setLoading());
+    let response;
+
+    brand ?
+     response = await AxiosInstance.get(`/api/products/brand/${brand}`)
+    : 
+     response = await AxiosInstance.get('/api/products/')
+
+    dispatch(setProducts(response.data));
+
+   
+  } catch (error) {
+    console.log("err", error);
+    dispatch(setError(error?.response?.data?.message))
+
   }
 };
 
@@ -64,7 +108,21 @@ export const getCategoriesNames = () => async dispatch => {
     return response.data;
 
   } catch (error) {
-    dispatch(setError(error.message));
+    console.log("err", error);
+    dispatch(setError(error?.response?.data?.message))
+
+  }
+};
+
+export const getBrandsNames = () => async dispatch => {
+  try {
+    const response = await AxiosInstance.get('/api/products/all-brands/');
+    return response.data;
+
+  } catch (error) {
+    console.log("err", error);
+    dispatch(setError(error?.response?.data?.message))
+
   }
 };
 
@@ -73,8 +131,12 @@ export const postProduct = (data) => async dispatch => {
     dispatch(setLoading());
     const response = await AxiosInstance.post('/api/products/', data);
     dispatch(setProducts(response.data));
+
+   
   } catch (error) {
-    dispatch(setError(error.message));
+    console.log("err", error);
+    dispatch(setError(error?.response?.data?.message))
+
   }
 };
 

@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectUser } from '../../redux/reducers/userSlice';
 import UserAvatar from '../UserAvatar';
 import { selectTotalQuantity } from '../../redux/reducers/cartSlice';
-import AxiosInstance from '../../axiosInstance';
+import SearchBar from '../Searchbar';
 
 // -------------------------------------------------------------------------------------
 
@@ -71,130 +71,138 @@ const Header = () => {
   return (
     <div className='header w-100 '>
 
-      <Row className=' p-3'>
+      <Row className='pt-2'>
 
-        <Col className='d-flex justify-content-start'  >
-          <Row>
+        <Col xs={12} md={4} className='d-block '  >
+          
             <StyledLink
-              className='brand fs-1 '
+              className='brand fs-1 me-2'
             >Shop
               <strong
                 style={{ color: '#474747' }}
               >In</strong>
             </StyledLink>
 
-
-          </Row>
-
         </Col>
-        <Col className='d-flex justify-content-end'>
-          <Nav>
 
-            <Nav.Link>
-              <OverlayTrigger
-                placement="bottom"
-                delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip('cart')}
-              >
-                <Link
-                  to={'/cart'}
-                  className='text-reset text-decoration-none'
-                  onClick={() => setActiveLink('Cart')}
-                >
-                  <StyledLink
-                  >
-                    {TotalQuantity > 0 ? (<span class="badge bg-secondary mt-2">{TotalQuantity}</span>) : null}
-                    <TiShoppingCart className='h3' title="Like" />
-                  </StyledLink>
-                </Link>
-              </OverlayTrigger>
-            </Nav.Link>
+        <Col xs={12} md={8} className=' d-flex justify-content-end me-0 position-absolute end-0'>
 
+          <Row className=' d-flex justify-content-end'>
 
-            {firstName ?
-              (
+            <Col xs={10} sm={7} className='mt-2'>
+              <SearchBar />
+            </Col>
 
-                <NavDropdown
-                  className="custom-nav-dropdown"
-                  id="basic-nav-dropdown"
-                  title={
-                    <UserAvatar
-                      imageUrl={user?.imageUrl}
-                      altText={user?.firstName}
-                      firstName={user?.firstName}
-                      lastName={user?.lastName} />}
-                >
+            <Col xs={12} sm={5}>
+              <Nav className=' p-0 me-0 ms-4 position-absolute end-0'>
 
-                    <NavDropdown.Item>
-                      <Nav.Link >
-                        <Link
-                          to='/orders'
-                          className='text-reset text-decoration-none text-dark'
-                          onClick={() => setActiveLink('Orders')}>
-                          <p className='text-decoration-none text-dark p-0'>
-                            My Orders
-                          </p>
-                        </Link>
-                      </Nav.Link>
-                    </NavDropdown.Item>
-
-                    <NavDropdown.Item  >
-                    <Nav.Link >
-                      <Link
-                        to='/profile'
-                        className='text-reset text-decoration-none text-dark'
-                        onClick={() => setActiveLink('Profile')}>
-                        <p className='text-decoration-none text-dark p-0'>
-                          Account details
-                        </p>
-                      </Link>
-                    </Nav.Link>
-                  </NavDropdown.Item>
-
-                  <NavDropdown.Item>
-                    <Nav.Link className='text-dark'>
-                      <Link
-                        to={'/login'}
-                        className='text-reset text-decoration-none text-dark'
-                        onClick={() => dispatch(logout())}
-                      >
-                        <p className='text-decoration-none text-dark p-0'>
-                          logOut
-                        </p>
-                      </Link>
-                    </Nav.Link>
-                  </NavDropdown.Item>
-
-
-                </NavDropdown>
-              )
-              :
-              (
-                <Nav.Link>
+                <Nav.Link className='m-0 p-0 mt-2'>
                   <OverlayTrigger
                     placement="bottom"
                     delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip('login')}
+                    overlay={renderTooltip('cart')}
                   >
-
-                    <button
-                      // to={'/login'}
-                      className='text-reset text-decoration-none border-0 bg-transparent p-0'
-                      onClick={handleLogin}
+                    <Link
+                      to={'/cart'}
+                      className='text-reset text-decoration-none'
+                      onClick={() => setActiveLink('Cart')}
                     >
                       <StyledLink
-                      // className={activeLink === 'Login' ? 'active-text-icon' : ''} 
                       >
-                        <BiLogIn className='h3' />
+                        {TotalQuantity > 0 ? (<span className="badge bg-secondary mt-2">{TotalQuantity} </span>) : null}
+                        <TiShoppingCart className='h3' title="Like" />
                       </StyledLink>
-                    </button>
-
+                    </Link>
                   </OverlayTrigger>
                 </Nav.Link>
-              )}
 
-          </Nav>
 
+                {firstName ?
+                  (
+
+                    <NavDropdown
+                      className="custom-nav-dropdown p-0"
+                      id="basic-nav-dropdown"
+                      title={
+                        <UserAvatar
+                          imageUrl={user?.imageUrl}
+                          altText={user?.firstName}
+                          firstName={user?.firstName}
+                          lastName={user?.lastName} />}
+                    >
+
+                      <NavDropdown.Item  >
+                        <Nav.Link >
+                          <Link
+                            to='/orders'
+                            className='text-reset text-decoration-none text-dark'
+                            onClick={() => setActiveLink('Orders')}>
+                            <p className='text-decoration-none text-dark p-0'>
+                              My Orders
+                            </p>
+                          </Link>
+                        </Nav.Link>
+                      </NavDropdown.Item>
+
+                      <NavDropdown.Item  >
+                        <Nav.Link >
+                          <Link
+                            to='/profile'
+                            className='text-reset text-decoration-none text-dark'
+                            onClick={() => setActiveLink('Profile')}>
+                            <p className='text-decoration-none text-dark p-0'>
+                              Account details
+                            </p>
+                          </Link>
+                        </Nav.Link>
+                      </NavDropdown.Item>
+
+                      <NavDropdown.Item>
+                        <Nav.Link className='text-dark'>
+                          <Link
+                            to={'/login'}
+                            className='text-reset text-decoration-none text-dark'
+                            onClick={() => dispatch(logout())}
+                          >
+                            <p className='text-decoration-none text-dark p-0'>
+                              logOut
+                            </p>
+                          </Link>
+                        </Nav.Link>
+                      </NavDropdown.Item>
+
+
+                    </NavDropdown>
+                  )
+                  :
+                  (
+                    <Nav.Link>
+                      <OverlayTrigger
+                        placement="bottom"
+                        delay={{ show: 250, hide: 400 }}
+                        overlay={renderTooltip('login')}
+                      >
+
+                        <button
+                          // to={'/login'}
+                          className='text-reset text-decoration-none border-0 bg-transparent p-0'
+                          onClick={handleLogin}
+                        >
+                          <StyledLink
+                          // className={activeLink === 'Login' ? 'active-text-icon' : ''} 
+                          >
+                            <BiLogIn className='h3' />
+                          </StyledLink>
+                        </button>
+
+                      </OverlayTrigger>
+                    </Nav.Link>
+                  )}
+
+              </Nav>
+
+            </Col>
+          </Row>
         </Col>
       </Row>
 
@@ -226,7 +234,7 @@ const Header = () => {
           </Container>
         </Navbar>
       </Row>
-    </div>
+    </div >
   )
 }
 

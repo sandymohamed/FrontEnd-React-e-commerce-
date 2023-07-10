@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 import { Container, Row, Col } from 'react-bootstrap';
 import ProductCard from '../ProductCard';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchProducts, selectProducts, selectLoading, selectError, getCategoriesNames, fetchProductsByCategory } from '../../redux/reducers/productsSlice';
+import { fetchProducts, selectProducts, selectLoading, selectError, getCategoriesNames, fetchProductsByCategory, getBrandsNames, fetchProductsByBrand } from '../../redux/reducers/productsSlice';
 import { PageNameContext } from '../../App';
 
 // -------------------------------------------------------------------------------------
@@ -17,8 +17,9 @@ const ProductsPage = () => {
     const error = useSelector(selectError);
     const dispatch = useDispatch();
 
-    const [selectedOption, setSelectedOption] = useState("");
-    const [options, setOptions] = useState(null);
+    // const [selectedOption, setSelectedOption] = useState("");
+    const [catOptions, setCatOptions] = useState(null);
+    const [brandOptions, setBrandOptions] = useState(null);
 
 
     const { setPageName } = useContext(PageNameContext)
@@ -27,7 +28,8 @@ const ProductsPage = () => {
     useEffect(() => {
         setPageName('Products')
         dispatch(fetchProducts());
-        dispatch(getCategoriesNames()).then((res) => setOptions(res));
+        dispatch(getCategoriesNames()).then((res) => setCatOptions(res));
+        dispatch(getBrandsNames()).then((res) => setBrandOptions(res));
 
 
     }, [dispatch]);
@@ -41,20 +43,35 @@ const ProductsPage = () => {
 
             <Container>
                 <Row>
-                    <Col xs={12} sm={6}>
+                    <Col xs={12} sm={6} className='d-flex  text-light m-2'>
                         <Typeahead
                             variant="warning"
                             id="category"
                             labelKey="name"
-                            label="Category"
-                            options={options ? options : null}
-                            selected={selectedOption}
+                            placeholder='Category'
+                            options={catOptions ? catOptions : null}
+                            // selected={selectedOption}
                             onChange={(selected) => {
-                                dispatch(fetchProductsByCategory( selected[0] ))
+                                dispatch(fetchProductsByCategory(selected[0]))
 
                             }}
                         />
+                        <Typeahead
+                            className='ms-2'
+                            variant="warning"
+                            id="Brand"
+                            labelKey="name"
+                            placeholder='Brand'
+                            options={brandOptions ? brandOptions : null}
+                            onChange={(selected) => {
+                                dispatch(fetchProductsByBrand(selected[0]))
+
+                            }}
+                        />
+
+
                     </Col>
+
                 </Row>
                 <Row className='parent mt-4'>
 

@@ -13,7 +13,7 @@ const UserAvatar = ({ imageUrl, altText, firstName, lastName }) => {
             {imageUrl ? (
                 <img src={imageUrl} alt={altText} />
             ) : (
-                <div className="avatar-initials brand fs-4" style={{ color: '#474747' }} >{getInitials()}</div>
+                <div className="avatar-initials brand fs-5" style={{ color: '#474747' }} >{getInitials()}</div>
             )}
         </div>
     );

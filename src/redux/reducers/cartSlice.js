@@ -17,28 +17,26 @@ export const cartSlice = createSlice({
     initialState,
     reducers: {
         setCart(state, action) {
-            state.products =  action.payload.products;
-            state.user =  action.payload.user;
-            state.totalQuantity =  action.payload.totalQuantity;
-            state.total =  action.payload.total;
+            state.products = action.payload.products;
+            state.user = action.payload.user;
+            state.totalQuantity = action.payload.totalQuantity;
+            state.total = action.payload.total;
             state.error = null;
         },
         addItem(state, action) {
             const newItem = action.payload;
-            
-            console.log(newItem);
+
             state.error = null;
-            
-            const existingItem = state.products.find(item => item._id === newItem._id);
-            // console.log(existingItem);
-            
+
+            const existingItem = state?.products?.find(item => item._id === newItem._id);
+
             state.user = newItem?.user;
             state.totalQuantity++;
 
             if (newItem.countInStock >= 1) {
 
                 if (!existingItem) {
-                    state.products.push({
+                    state?.products?.push({
                         _id: newItem._id,
                         price: newItem.price,
                         quantity: 1,
@@ -51,7 +49,6 @@ export const cartSlice = createSlice({
 
                     })
 
-                    // console.log();
                     state.total = state.total + newItem.price;
 
                 } else {
@@ -66,7 +63,7 @@ export const cartSlice = createSlice({
         removeItem(state, action) {
             state.error = null;
             const item = action.payload;
-            const existingItem = state.products.find(piece => piece._id === item._id);
+            const existingItem = state?.products?.find(piece => piece._id === item._id);
             state.totalQuantity--;
             state.total = state.total - item.price;
 
@@ -75,7 +72,7 @@ export const cartSlice = createSlice({
 
                 if (existingItem?.quantity === 1) {
                     existingItem.quantity = existingItem.quantity - 1;
-                    state.products = state.products.filter(item => item.quantity > 0);
+                    state.products = state?.products?.filter(item => item.quantity > 0);
 
 
                 } else {
@@ -104,13 +101,11 @@ export const cartSlice = createSlice({
 export const { setCart, addItem, removeItem, clearCart, setError } = cartSlice.actions;
 
 export const addCart = (data) => async (dispatch, getState) => {
-    console.log(data);
     try {
         dispatch(addItem(data));
-        
+
         const cartState = getState().cart;
         const response = await AxiosInstance.post('/api/carts/', cartState);
-        console.log('res: ', response.data);
 
     } catch (error) {
         if (error.response && error.response.status === 400) {
@@ -151,11 +146,9 @@ export const removeItemFromCart = (data) => async (dispatch, getState) => {
 
 export const getCartDetails = (user) => async (dispatch) => {
     try {
-        
-        // const cartState = getState().cart;
+
         const response = await AxiosInstance.get('/api/carts/user/');
-        dispatch(setCart(response.data));
-        console.log('res: ', response.data);
+        dispatch(setCart(response.data[0]));
 
     } catch (error) {
         if (error.response && error.response.status === 400) {

@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addOrder, orderSlice, selectPaymentMethods, selectShihppingAddress, } from '../../redux/reducers/orderSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import StepsHeader from '../StepsHeader';
-import { removeItemFromCart, selectCartitems, selectTotal } from '../../redux/reducers/cartSlice';
+import { removeCart, selectCartitems, selectTotal } from '../../redux/reducers/cartSlice';
 // --------------------------------------------------------------------
 
 const schema = yup.object().shape({
@@ -74,7 +74,7 @@ const PaymentForm = () => {
     if (data.paymentOption === 'cash') {
 
       dispatch(addOrder(order));
-      dispatch(removeItemFromCart());
+      dispatch(removeCart());
 
       navigate('/orders')
     } else {
