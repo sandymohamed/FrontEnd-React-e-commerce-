@@ -29,25 +29,16 @@ const PaymentForm = () => {
   const products = useSelector(selectCartitems);
   const totalPrice = useSelector(selectTotal);
   const shihppingAddress = useSelector(selectShihppingAddress);
-  const paymentMethods = useSelector(selectPaymentMethods);
 
 
 
-  const { register, handleSubmit, errors, watch, formState } = useForm({
+  const { register, handleSubmit, errors, watch } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       paymentOption: ''
     }
   });
   const selectedPaymentOption = watch('paymentOption');
-
-
-  // order details:
-
-
-
-
-
 
 
   const onSubmit = async (data) => {
@@ -111,7 +102,7 @@ const PaymentForm = () => {
 
 
             <Form onSubmit={handleSubmit(onSubmit)} className='mb-5 text-light'>
-              <Row>
+               <Row>
 
                 <Col sm={10}>
                   <Form.Group>

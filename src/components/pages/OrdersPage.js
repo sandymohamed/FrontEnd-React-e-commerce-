@@ -8,7 +8,8 @@ const OrdersPage = () => {
 
     const dispatch = useDispatch();
     const orders = useSelector(selectOrder);
-    const [loading, setLoading] = useState(true)
+
+    const [loading, setLoading] = useState(true);
 
     const handleCancelOrder = (id) => {
 
@@ -18,9 +19,9 @@ const OrdersPage = () => {
 
     useEffect(() => {
 
-        console.log(orders);
-        dispatch(getOrders()).then(res => setLoading(false))
-    }, [])
+        dispatch(getOrders()).then(() => setLoading(false))
+        
+    }, [loading])
 
 
     return (

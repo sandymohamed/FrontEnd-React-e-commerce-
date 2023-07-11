@@ -3,6 +3,7 @@ import '../App.scss';
 // -------------------------------------------------------------------------------------
 
 const UserAvatar = ({ imageUrl, altText, firstName, lastName }) => {
+    
     const getInitials = () => {
         const initials = (firstName.charAt(0) + lastName.charAt(0)).toUpperCase();
         return initials;

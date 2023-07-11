@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+    import { createSlice } from '@reduxjs/toolkit';
 import AxiosInstance from '../../axiosInstance';
 // --------------------------------------------------------------------
 
@@ -20,6 +20,7 @@ const initialState = {
         status: "",
         deliveredAt: null,
     },
+
     loading: false,
     error: null,
 }
@@ -42,7 +43,6 @@ export const orderSlice = createSlice({
 
         },
         setPaymentMethods(state, action) {
-            console.log(state, action);
             state.order.paymentMethods = action.payload;
             state.loading = false;
             state.error = null;
@@ -98,7 +98,6 @@ export const addPaymentResult = (data) => async (dispatch) => {
 
 export const addOrder = (data) => async (dispatch) => {
 
-    console.log('order data : ', data);
 
     try {
         dispatch(setLoading());
