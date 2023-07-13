@@ -60,6 +60,7 @@ const Shipping = () => {
         console.log(data);
         await dispatch(addShippingAddress(data)).then((res) => {
             navigate('/payment')
+            showMessage('Success✔', 'success');
         }).catch((error) => {
             showMessage(`Failed ${error}❌`, 'danger');
         })

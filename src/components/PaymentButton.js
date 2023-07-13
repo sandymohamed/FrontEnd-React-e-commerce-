@@ -45,7 +45,6 @@ const PaymentButton = () => {
   };
 
   const createOrder = (data, actions) => {
-    console.log('createeeeee');
     if (totalPrice > 0) {
 
       return actions.order.create({

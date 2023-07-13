@@ -15,6 +15,7 @@ const schema = yup.object().shape({
     firstName: yup.string(),
     lastName: yup.string(),
     email: yup.string().email('Invalid email'),
+    avatar: yup.mixed().required('Avatar is required'),
     password: yup.string(),
     confirmPassword: yup
         .string()
@@ -29,6 +30,8 @@ const UpdateProfile = () => {
     const user = useSelector(selectUser);
     const loading = useSelector(selectLoading);
     const error = useSelector(selectError);
+
+    const [avatarFile, setAvatarFile] = useState(null);
 
     const [alertVariant, setAlertVariant] = useState(null);
     const [alertMessage, setAlertMessage] = useState('');
@@ -48,15 +51,31 @@ const UpdateProfile = () => {
             firstName: user?.firstName,
             lastName: user?.lastName,
             email: user?.email,
+            avatar: '',
             password: '',
             confirmPassword: '',
         },
     });
 
+    const handleAvatarChange = (e) => {
+        const file = e.target.files[0];
+        setAvatarFile(file);
+    };
+
+
     const onSubmit = async (data) => {
 
+        const formData = new FormData();
+        formData.append('avatar', avatarFile);
+        formData.append('firstName', data.firstName);
+        formData.append('lastName', data.lastName);
+        formData.append('email', data.email);
+        formData.append('password', data.password);
+        formData.append('confirmPassword', data.confirmPassword);
+     
+
         try {
-            await dispatch(updateProfile(data));
+            await dispatch(updateProfile(formData));
             showMessage('Profile Updated Successfully✔', 'warning');
         } catch (error) {
             showMessage('Profile Update failed❌', 'danger');
@@ -98,7 +117,7 @@ const UpdateProfile = () => {
             {errors.lastName && <Form.Text className="text-danger m-1 position-absolute start-50 "  >{errors.lastName.message}</Form.Text>}
 
 
-            <Form.Group className='d-flex justify-content-between align-items-center mt-5 fs-5 lh-base' controlId="formBasicEmail">
+            <Form.Group className='d-flex justify-content-between align-items-center mt-5 mb-5 fs-5 lh-base' controlId="formBasicEmail">
                 <Form.Label className='w-50'>Email address</Form.Label>
                 <Form.Control
                     className='w-50'
@@ -112,11 +131,13 @@ const UpdateProfile = () => {
             {errors.email && <Form.Text className="text-danger m-1 position-absolute start-50 "  >{errors.email.message}</Form.Text>}
 
 
-            <Form.Group className='d-flex justify-content-between align-items-center mt-5 fs-5 lh-base' controlId="formBasicPassword">
+            <Form.Label className='w-50'>* If you don't need to update password leave it empty.</Form.Label>
+            <Form.Group className='d-flex justify-content-between align-items-center  fs-5 lh-base' controlId="formBasicPassword">
                 <Form.Label className='w-50'>New Password</Form.Label>
                 <Form.Control
                     className='w-50'
                     type="password"
+                    placeholder='*...*'
                     name="password"
                     {...register('password')}
                     isInvalid={!!errors.password}
@@ -131,23 +152,35 @@ const UpdateProfile = () => {
                 <Form.Control
                     className='w-50'
                     type="password"
+                    placeholder='*...*'
                     name="confirmPassword"
                     {...register('confirmPassword')}
                     isInvalid={!!errors.confirmPassword}
                 />
 
             </Form.Group>
+
+
+            <Form.Group className="mt-4 p-2" controlId="formAvatar">
+                <Form.Label className='w-50 text-light text-start fs-5'>Your Photo: </Form.Label>
+                <input type="file" onChange={handleAvatarChange} className='text-light' />
+
+                {errors.avatar && <Form.Text className="text-danger">{errors.avatar.message}</Form.Text>}
+            </Form.Group>
+
+
             {errors.confirmPassword && <Form.Text className="text-danger m-1 position-absolute start-50 "  >{errors.confirmPassword.message}</Form.Text>}
             {
                 loading ? (
                     <div class="spinner-border text-primary mt-2" role="status">
                     </div>
                 ) : (
-                    <div className="w-50 position-relative bottom-0 start-50 mt-5 overflow-hidden">
-                    <button className=" w-25 btn buttons " type="submit">
-                        Update Profile
+
+                    <div className="w-100 mt-5 d-flex justify-content-center">
+                    <button className="w-50 btn buttons" type="submit">
+                      Update Profile
                     </button>
-                 </div>
+                  </div>
                 )}
             {error && <Form.Text className="fs-4 text-danger d-block"> <TiWarningOutline /> {error}</Form.Text>}
 

@@ -125,7 +125,7 @@ const Header = () => {
                       id="basic-nav-dropdown"
                       title={
                         <UserAvatar
-                          imageUrl={user?.imageUrl}
+                          imageUrl={user?.avatar}
                           altText={user?.firstName}
                           firstName={user?.firstName}
                           lastName={user?.lastName} />}

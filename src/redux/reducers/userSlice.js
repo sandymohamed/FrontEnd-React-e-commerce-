@@ -84,7 +84,11 @@ export const signUp = (data) => async dispatch => {
 
     try {
         dispatch(setLoading());
-        const response = await AxiosInstance.post('api/user/signup/', data);
+        const response = await AxiosInstance.post('api/user/signup/', data, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
         dispatch(setUser(response.data));
         
         localStorage.setItem('token', response.data.token);
@@ -110,7 +114,10 @@ export const updateProfile = (data) => async dispatch => {
 
     try {
         dispatch(setLoading());
-        const response = await AxiosInstance.put('api/users/profile', data);
+        const response = await AxiosInstance.put('api/users/profile', data, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }});
         dispatch(setUser(response.data));
         
         localStorage.setItem('token', response.data.token);
