@@ -13,6 +13,7 @@ import "../../App.scss";
 import Message from '../Message';
 import { selectUser } from '../../redux/reducers/userSlice';
 import { useSelector } from 'react-redux';
+import CardSketlon from '../CardSketlon';
 
 // --------------------------------------------------------------------
 const schema = yup.object().shape({
@@ -86,14 +87,14 @@ const ProductDetails = () => {
   const getProductReviews = () => {
 
     AxiosInstance.post('api/reviews/', { product: id })
-    .then((res) => {
-      setLoading(false);
-      setReviews(res.data);
-      console.log(res.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .then((res) => {
+        setLoading(false);
+        setReviews(res.data);
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   useEffect(() => {
@@ -108,27 +109,35 @@ const ProductDetails = () => {
         console.log(error);
       });
 
-      getProductReviews();
-      console.log(user)
+    getProductReviews();
+    console.log(user)
+    console.log('im2', product?.image);
+    console.log('prod', product);
 
   }, []);
 
 
   if (!product) {
     return (
+      <>
       <div className="spinner-border text-primary" role="status" />
+      <Container className=' ms-6 w-75 align-center'>
+          <CardSketlon details={true} />
+      </Container>
+        </>
+      
     );
   }
 
   return (
     <>
-     
+
       <Container className='text-light p-2'>
         <Row className="text-start boxShadow bg-dark rounded mt-3 p-4">
-          <Col xs={11} sm={6} className="m-0  p-0 card-image">
+          <Col xs={11} sm={5} className="m-0  p-0 ">
             <img src={product.image} alt={product.name} className="rounded card-image" />
           </Col>
-          <Col sm={5} className='card-text-start'>
+          <Col sm={6} className='card-text-start '>
             <h3>{product.name}</h3>
             <p>{product.description}</p>
             <p>Price: {product.price}</p>
@@ -147,9 +156,14 @@ const ProductDetails = () => {
         <p className="fs-4">Reviews:</p>
 
         {alertVariant && (
-        <Message messageText={alertMessage} variant={alertVariant} />
-      )}
-        {loading && <div className="spinner-border text-primary" role="status" />}
+          <Message messageText={alertMessage} variant={alertVariant} />
+        )}
+        {loading &&
+          <>
+            <div className="spinner-border text-primary" role="status" />
+            <CardSketlon details={true} />
+          </>
+        }
         {reviews?.map((review) => (
           <Row
             className="boxShadow text-start bg-dark text-light rounded mt-3 p-2 d-flex flex-row justify-content-start align-items-center"
@@ -166,18 +180,25 @@ const ProductDetails = () => {
 
 
 
-          {  
-          (user._id === review.userId._id ) &&
-            <button onClick={() => {
-                handleDeleteReview(review._id)
-              }}>
+              {
+                (user._id === review.userId._id) &&
+                <button onClick={() => {
+                  handleDeleteReview(review._id)
+                }}>
 
-                <RiDeleteBin5Fill className='fs-5 position-absolute end-0 me-2 text-danger cursor-pointer' />
-              </button>}
+                  <RiDeleteBin5Fill className='fs-5 position-absolute end-0 me-2 text-danger cursor-pointer' />
+                </button>}
 
             </div>
             <p><Rating value={review?.rating} /></p>
             <p>{review?.comment}</p>
+            {
+              review?.image &&
+
+              <img src={`${process.env.REACT_APP_API_URL}${review?.image}`} alt={`pic-${review?.image}`} className="rounded w-25" />
+
+            }
+
           </Row>
         ))
         }

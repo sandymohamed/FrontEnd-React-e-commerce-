@@ -36,8 +36,8 @@ const Login = () => {
     const { handleSubmit, register, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
         defaultValues: {
-            email: 'sandysawy@gmail.com',
-            password: 's123'
+            email: 'Jesseka@example.com',
+            password: 's1234'
 
         }
     });
@@ -85,8 +85,8 @@ const Login = () => {
                 </Form.Group>
                 {
                     loading ? (
-                        <div class="spinner-border text-primary mt-2" role="status">
-                            {/* <span class="sr-only">Loading...</span> */}
+                        <div className="spinner-border text-primary mt-2" role="status">
+                            {/* <span className="sr-only">Loading...</span> */}
                         </div>
                     ) : (
                         <Button className="btn buttons mt-2" type="submit">

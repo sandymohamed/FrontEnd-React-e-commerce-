@@ -242,13 +242,15 @@ $Coloryellow: #E78A00;
 
 }
 
-@media (max-width: 800px) {
+@media (max-width: 860px) {
   .card-image {
-   margin-right: 2rem;
+    width: 90%;
+    margin-right: 2rem;
   }
-.card-text-start{
-  margin-left: 2rem;
-}
+
+  .card-text-start {
+    margin-left: 2.6rem;
+  }
 }
 
 @media (max-width: 600px) {

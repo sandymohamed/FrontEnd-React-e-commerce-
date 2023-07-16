@@ -3,6 +3,7 @@ import { Card, CardGroup, Col, Container, Row, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { deleteOrder, getOrders, selectOrder } from '../../redux/reducers/orderSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import CardSketlon from '../CardSketlon'
 
 const OrdersPage = () => {
 
@@ -20,7 +21,7 @@ const OrdersPage = () => {
     useEffect(() => {
 
         dispatch(getOrders()).then(() => setLoading(false))
-        
+
     }, [loading])
 
 
@@ -28,12 +29,24 @@ const OrdersPage = () => {
         <Container className=' p-2 text-light'>
             {
                 loading ? (
-                    <div class="spinner-border text-primary " role="status" />
-                   
+                    <>
+                        <div className="spinner-border text-primary " role="status" />
+                        <Container className='mb-4 '>
+                            {[...Array(2)].map((item, index) => (
+                                <>
+                                    <p className='bg-secondary   w-50 m-3 text-center' > --</p>
+                                    <p className='bg-secondary  w-100'>  -- </p>
+                                    <p className='bg-secondary  w-100'>  -- </p>
+
+                                    <CardSketlon h={38} w={20} index={index} className=' m-4 mb-3 ' />
+                                </>
+                            ))}
+                        </Container>
+                    </>
                 ) :
                     orders.length ?
                         orders.map((order) => (
-                            <div key={order._id}>
+                            <div key={order._id} className='mb-4'>
                                 <Row>
                                     <Col>
                                         <p className='fs-3 text-start yellow-text'>Order Details: </p>

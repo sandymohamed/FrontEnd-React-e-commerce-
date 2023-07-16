@@ -34,7 +34,6 @@ const ProductCard = ({ product }) => {
   const { name, image, price, oldPrice, rating, _id, countInStock } = product;
 
 
-
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 

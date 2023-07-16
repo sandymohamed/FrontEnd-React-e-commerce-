@@ -46,6 +46,18 @@ export const fetchProducts = () => async dispatch => {
   }
 };
 
+export const fetchLatestProducts = () => async dispatch => {
+  try {
+    dispatch(setLoading());
+    const response = await AxiosInstance.get('/api/products/latest');
+
+  } catch (error) {
+    console.log("err", error);
+    dispatch(setError(error?.response?.data?.message))
+
+  }
+};
+
 export const searchProducts = (name) => async dispatch => {
   try {
     dispatch(setLoading());

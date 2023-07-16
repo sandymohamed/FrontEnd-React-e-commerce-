@@ -10,6 +10,7 @@ import { PageNameContext } from '../../App';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 import { selectUser } from '../../redux/reducers/userSlice';
 import StepsHeader from '../StepsHeader';
+import CardSketlon from '../CardSketlon';
 
 // -------------------------------------------------------------------------------------
 const StyledCard = styled.div`
@@ -87,7 +88,7 @@ const CartPage = () => {
 
     if (user) {
 
-      dispatch(getCartDetails()).then(()=> setLoading(false))
+      dispatch(getCartDetails()).then(() => setLoading(false))
     }
 
     setPageName('Cart')
@@ -154,7 +155,16 @@ const CartPage = () => {
       <Row>
         <Col xs={12} md={8}>
           {loading ? (
-            <div class="spinner-border text-primary " role="status" />
+            <>
+              <div className="spinner-border text-primary " role="status" />
+              {[...Array(3)].map((item, index) => (
+                <div className='mb-4 '>
+                  <CardSketlon details={true} h={25} index={index} className='mb-4 ' />
+                </div>
+              ))
+
+              }
+            </>
 
           ) :
             items?.length ?

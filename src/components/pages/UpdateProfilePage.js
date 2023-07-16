@@ -172,7 +172,7 @@ const UpdateProfile = () => {
             {errors.confirmPassword && <Form.Text className="text-danger m-1 position-absolute start-50 "  >{errors.confirmPassword.message}</Form.Text>}
             {
                 loading ? (
-                    <div class="spinner-border text-primary mt-2" role="status">
+                    <div className="spinner-border text-primary mt-2" role="status">
                     </div>
                 ) : (
 

@@ -141,8 +141,8 @@ const Shipping = () => {
 
                 {
                     loading ? (
-                        <div class="spinner-border text-primary mt-2" role="status">
-                            {/* <span class="sr-only">Loading...</span> */}
+                        <div className="spinner-border text-primary mt-2" role="status">
+                            {/* <span className="sr-only">Loading...</span> */}
                         </div>
                     ) : (
                         <Button className="btn buttons mt-5" type="submit">
