@@ -60,12 +60,10 @@ const PaymentForm = () => {
 
     }
 
-    console.log("front order: ", order);
-
     if (data.paymentOption === 'cash') {
 
       dispatch(addOrder(order));
-      dispatch(removeCart());
+      // dispatch(removeCart());
 
       navigate('/orders')
     } else {
@@ -154,8 +152,6 @@ const PaymentForm = () => {
 
 
 
-          {/* <Card.Footer style={{ display: (selectedPaymentOption === 'card' || selectedPaymentOption === 'paypal') ? 'block' : 'none' }}>
-        </Card.Footer> */}
         </Card>
       </Container>
 

@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import {  addCart,  } from '../redux/reducers/cartSlice';
 import { selectUser } from '../redux/reducers/userSlice';
+import DynamicImage from './DynamicImage';
+import '../App.scss';
 // --------------------------------------------------------------------
 
 const StyledCard = styled.div`
@@ -16,13 +18,6 @@ box-shadow:  -.6rem .6rem .6rem rgba(0, 0, 0, 0.4);
 
 `;
 
-const StyledImg = styled.img`
-height:100%;
-width:100%;
-border: none;
-border-radius: 10px;
-
-`;
 const StyledBody = styled.div`
 height: 10%; width:100%;
 
@@ -47,7 +42,7 @@ const ProductCard = ({ product }) => {
   return (
     <Card className='box-border h-100'>
       <Link to={`/product/${_id}`} style={{ height: '40vh' }}>
-        <StyledImg variant="top" src={image} />
+      <DynamicImage variant="top" image={image} className='product-card-img' />
       </Link>
       <StyledBody>
 

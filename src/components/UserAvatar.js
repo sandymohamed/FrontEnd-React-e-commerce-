@@ -1,5 +1,6 @@
 import React from 'react';
 import '../App.scss';
+import DynamicImage from './DynamicImage';
 // -------------------------------------------------------------------------------------
 
 const UserAvatar = ({ imageUrl, altText, firstName, lastName }) => {
@@ -18,7 +19,7 @@ const UserAvatar = ({ imageUrl, altText, firstName, lastName }) => {
     return (
         <div className={`user-avatar rounded-circle mt-1 ${imageUrl ? null : 'boxShadow'}` }>
             {imageUrl ? (
-                <img src={`${process.env.REACT_APP_API_URL}${imageUrl}`} alt={altText} className='w-100 rounded-circle boxShadow'/>
+                <DynamicImage image={imageUrl} alt={altText} className='w-100 rounded-circle boxShadow'/>
             ) : (
                 <div className="avatar-initials brand fs-5" style={{ color: '#474747' }} >{getInitials()}</div>
             )}

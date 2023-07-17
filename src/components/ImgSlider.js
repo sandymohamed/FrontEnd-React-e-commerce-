@@ -1,10 +1,12 @@
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
+import '../App.scss';
+// --------------------------------------------------------------------
 
 function Carousels() {
   return (
     // <div className='img-container'>
-    <Carousel controls={false} className='rounded mt-4'>
+    <Carousel controls={false} className='rounded mt-4 '>
       <Carousel.Item  >
         <img
           className='w-100 rounded img-container m-2 me-4 '

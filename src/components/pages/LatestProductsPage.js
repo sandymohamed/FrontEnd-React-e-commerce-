@@ -26,7 +26,7 @@ const LatestProductsPage = () => {
 
 
     useEffect(() => {
-        setPageName('Products')
+        setPageName('New Products')
         dispatch(fetchLatestProducts()).then(res => setProducts(res))
         dispatch(getCategoriesNames()).then((res) => setCatOptions(res));
         dispatch(getBrandsNames()).then((res) => setBrandOptions(res));
@@ -87,7 +87,7 @@ const LatestProductsPage = () => {
                                   <div className="spinner-border text-primary " role="status" />
                                   <Container className='mb-6 d-flex flex-wrap justify-content-evenly aligh-items-center'>
                                     {[...Array(14)].map((item, index) => (
-                                      <CardSketlon h={50} w={20} index={index} className=' mb-6 ' />
+                                      <CardSketlon h={50} w={20} key={index} className=' mb-6 ' />
                                     )) }
                                   </Container>
                                 </>

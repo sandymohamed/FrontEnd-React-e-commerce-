@@ -1,24 +1,27 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import { FormProvider, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import  { useState, useEffect, useContext } from 'react';
+import { useSelector } from 'react-redux';
 import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
-import AxiosInstance from '../../axiosInstance';
 import Rating from '../Rating';
-import { PageNameContext } from '../../App';
 import UserAvatar from '../UserAvatar';
-import "../../App.scss";
 import Message from '../Message';
 import { selectUser } from '../../redux/reducers/userSlice';
-import { useSelector } from 'react-redux';
+import AxiosInstance from '../../axiosInstance';
 import CardSketlon from '../CardSketlon';
+import DynamicImage from '../DynamicImage';
+import { PageNameContext } from '../../App';
+import "../../App.scss";
 
 // --------------------------------------------------------------------
 const schema = yup.object().shape({
   rating: yup.number().min(1).max(5).required(),
   comment: yup.string().required("Comment is required"),
+  image: yup.mixed(),
+
 });
 
 // -------------------------------------------------------------------------------------
@@ -37,30 +40,53 @@ const ProductDetails = () => {
 
   const [alertVariant, setAlertVariant] = useState(null);
   const [alertMessage, setAlertMessage] = useState('');
-
+  
   const showMessage = (message, variant) => {
     setAlertVariant(variant);
     setAlertMessage(message);
   };
 
+  
+  const [imageFile, setImageFile] = useState(null);
 
-  const methods = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+} = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       rating: '',
       comment: '',
+      image: '',
     },
   });
 
-  const { register, handleSubmit, formState: { errors }, reset } = methods;
-
-  const onSubmit = (data) => {
+  // const { register, handleSubmit, formState: { errors }, reset } = methods;
 
 
-    AxiosInstance.post('/api/reviews/new', { ...data, product: id })
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImageFile(file);
+};
+
+  const onSubmit = async (data) => {
+    
+
+    const formData = new FormData();
+    formData.append('image', imageFile);
+    formData.append('rating', data.rating);
+    formData.append('comment', data.comment);
+
+
+    AxiosInstance.post('/api/reviews/new', { ...data, image: imageFile, product: id }, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
       .then((res) => {
-        console.log(res);
-        // Update the reviews state with the new review
         setReviews((prevReviews) => [...prevReviews, res.data]);
         reset();
       })
@@ -70,11 +96,9 @@ const ProductDetails = () => {
   };
 
   const handleDeleteReview = (id) => {
-    console.log(id);
 
     AxiosInstance.delete(`/api/reviews/${id}`)
       .then((res) => {
-        console.log(res);
         // Update the reviews state with the new review
         getProductReviews();
         showMessage(`Success✔ ${res?.data?.message}`, 'success');
@@ -90,7 +114,6 @@ const ProductDetails = () => {
       .then((res) => {
         setLoading(false);
         setReviews(res.data);
-        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -110,9 +133,6 @@ const ProductDetails = () => {
       });
 
     getProductReviews();
-    console.log(user)
-    console.log('im2', product?.image);
-    console.log('prod', product);
 
   }, []);
 
@@ -120,12 +140,12 @@ const ProductDetails = () => {
   if (!product) {
     return (
       <>
-      <div className="spinner-border text-primary" role="status" />
-      <Container className=' ms-6 w-75 align-center'>
+        <div className="spinner-border text-primary" role="status" />
+        <Container className=' ms-6 w-75 align-center'>
           <CardSketlon details={true} />
-      </Container>
-        </>
-      
+        </Container>
+      </>
+
     );
   }
 
@@ -135,7 +155,7 @@ const ProductDetails = () => {
       <Container className='text-light p-2'>
         <Row className="text-start boxShadow bg-dark rounded mt-3 p-4">
           <Col xs={11} sm={5} className="m-0  p-0 ">
-            <img src={product.image} alt={product.name} className="rounded card-image" />
+            <DynamicImage image={product.image} alt={product.name} className="rounded card-image" />
           </Col>
           <Col sm={6} className='card-text-start '>
             <h3>{product.name}</h3>
@@ -161,7 +181,12 @@ const ProductDetails = () => {
         {loading &&
           <>
             <div className="spinner-border text-primary" role="status" />
-            <CardSketlon details={true} />
+            {[...Array(4)].map((item, index) => (
+              <div key={index}>
+                <CardSketlon h={23} w={100} details={true} index={index} review className=' m-4 mb-6 ' />
+                <br />
+              </div>
+            ))}
           </>
         }
         {reviews?.map((review) => (
@@ -169,7 +194,7 @@ const ProductDetails = () => {
             className="boxShadow text-start bg-dark text-light rounded mt-3 p-2 d-flex flex-row justify-content-start align-items-center"
             key={review.id}
           >
-            <div className="w-100 d-flex flex-row flex-wrap-nowrap align-items-center position-relative">
+            <div className="w-100 d-flex flex-row flex-wrap-nowrap align-items-center position-relative mb-3">
               <UserAvatar
                 imageUrl={review?.userId?.avatar}
                 altText={review?.userId?.firstName}
@@ -195,7 +220,7 @@ const ProductDetails = () => {
             {
               review?.image &&
 
-              <img src={`${process.env.REACT_APP_API_URL}${review?.image}`} alt={`pic-${review?.image}`} className="rounded w-25" />
+              <DynamicImage image={review?.image} alt={`pic-${review?.image}`} className="rounded w-25 h-25" />
 
             }
 
@@ -206,7 +231,7 @@ const ProductDetails = () => {
         <hr />
         <Row className='mt-6'>
           <p className="fs-4">Add New Review:</p>
-          <FormProvider {...methods} >
+          {/* <FormProvider {...methods} > */}
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Form.Group controlId="formBasicRating">
                 <Form.Control
@@ -229,9 +254,16 @@ const ProductDetails = () => {
                 {errors.comment && <span>This field is required</span>}
               </Form.Group>
 
+              <Form.Group className="mt-4 p-2" controlId="formImage">
+                <Form.Label className='w-50 text-light text-start fs-5'>Picture: </Form.Label>
+                <input type="file" onChange={handleImageChange} className='text-light' />
+
+                {errors.avatar && <Form.Text className="text-danger">{errors.image.message}</Form.Text>}
+            </Form.Group>
+
               <Button type="submit" className='btn buttons mt-3'>Submit</Button>
             </Form>
-          </FormProvider>
+          {/* </FormProvider> */}
         </Row>
       </Container>
     </>

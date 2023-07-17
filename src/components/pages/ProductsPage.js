@@ -88,7 +88,7 @@ const ProductsPage = () => {
                                   <div className="spinner-border text-primary " role="status" />
                                   <Container className='mb-6 d-flex flex-wrap justify-content-evenly aligh-items-center'>
                                     {[...Array(14)].map((item, index) => (
-                                      <CardSketlon h={50} w={20} index={index} className=' mb-6 ' />
+                                      <CardSketlon h={50} w={20} key={index} className=' mb-6 ' />
                                     )) }
                                   </Container>
                                 </>

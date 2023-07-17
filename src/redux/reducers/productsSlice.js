@@ -40,7 +40,6 @@ export const fetchProducts = () => async dispatch => {
    
 
   } catch (error) {
-    console.log("err", error);
     dispatch(setError(error?.response?.data?.message))
 
   }
@@ -52,7 +51,6 @@ export const fetchLatestProducts = () => async dispatch => {
     const response = await AxiosInstance.get('/api/products/latest');
 
   } catch (error) {
-    console.log("err", error);
     dispatch(setError(error?.response?.data?.message))
 
   }
@@ -66,7 +64,6 @@ export const searchProducts = (name) => async dispatch => {
 
    
   } catch (error) {
-    console.log("err", error);
     dispatch(setError(error?.response?.data?.message))
 
   }
@@ -87,14 +84,12 @@ export const fetchProductsByCategory = (cat) => async dispatch => {
 
    
   } catch (error) {
-    console.log("err", error);
     dispatch(setError(error?.response?.data?.message))
 
   }
 };
 
 export const fetchProductsByBrand = (brand) => async dispatch => {
- console.log("bbbb", brand);
   try {
     dispatch(setLoading());
     let response;
@@ -108,7 +103,6 @@ export const fetchProductsByBrand = (brand) => async dispatch => {
 
    
   } catch (error) {
-    console.log("err", error);
     dispatch(setError(error?.response?.data?.message))
 
   }
@@ -120,7 +114,6 @@ export const getCategoriesNames = () => async dispatch => {
     return response.data;
 
   } catch (error) {
-    console.log("err", error);
     dispatch(setError(error?.response?.data?.message))
 
   }
@@ -132,7 +125,6 @@ export const getBrandsNames = () => async dispatch => {
     return response.data;
 
   } catch (error) {
-    console.log("err", error);
     dispatch(setError(error?.response?.data?.message))
 
   }
@@ -146,7 +138,6 @@ export const postProduct = (data) => async dispatch => {
 
    
   } catch (error) {
-    console.log("err", error);
     dispatch(setError(error?.response?.data?.message))
 
   }

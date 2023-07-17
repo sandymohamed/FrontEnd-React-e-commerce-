@@ -1,8 +1,10 @@
-import React from 'react'
-import { Container, Row } from 'react-bootstrap'
-import Tabs from '../Tabs'
-import ProfileDetailsPage from './ProfileDetailsPage'
-import UpdateProfilePage from './UpdateProfilePage'
+import { Container, Row } from 'react-bootstrap';
+import Tabs from '../Tabs';
+import ProfileDetailsPage from './ProfileDetailsPage';
+import UpdateProfilePage from './UpdateProfilePage';
+import { PageNameContext } from '../../App';
+import { useContext, useEffect } from 'react';
+
 // --------------------------------------------------------------------
 
 const myTabs = [
@@ -15,6 +17,12 @@ const myTabs = [
 
 
 export default function ProfilePage() {
+  const { pageName, setPageName } = useContext(PageNameContext);
+
+  useEffect(() => {
+
+    setPageName('Account Details')
+  }, [])
   return (
     <Container>
         <Row  className='mt-6'>

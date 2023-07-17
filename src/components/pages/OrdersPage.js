@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Card, CardGroup, Col, Container, Row, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { deleteOrder, getOrders, selectOrder } from '../../redux/reducers/orderSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import CardSketlon from '../CardSketlon'
+import { PageNameContext } from '../../App';
+// --------------------------------------------------------------------
 
 const OrdersPage = () => {
 
     const dispatch = useDispatch();
     const orders = useSelector(selectOrder);
+
+    const { pageName, setPageName } = useContext(PageNameContext);
 
     const [loading, setLoading] = useState(true);
 
@@ -19,7 +23,7 @@ const OrdersPage = () => {
     }
 
     useEffect(() => {
-
+        setPageName('My Orders')
         dispatch(getOrders()).then(() => setLoading(false))
 
     }, [loading])
@@ -33,13 +37,13 @@ const OrdersPage = () => {
                         <div className="spinner-border text-primary " role="status" />
                         <Container className='mb-4 '>
                             {[...Array(2)].map((item, index) => (
-                                <>
+                                <div key={index}>
                                     <p className='bg-secondary   w-50 m-3 text-center' > --</p>
                                     <p className='bg-secondary  w-100'>  -- </p>
                                     <p className='bg-secondary  w-100'>  -- </p>
 
                                     <CardSketlon h={38} w={20} index={index} className=' m-4 mb-3 ' />
-                                </>
+                                </div>
                             ))}
                         </Container>
                     </>

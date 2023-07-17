@@ -1,5 +1,5 @@
 import PaymentButton from '../PaymentButton'
-import { Breadcrumb, Container } from 'react-bootstrap'
+import { Breadcrumb, Col, Container, Row } from 'react-bootstrap'
 import StepsHeader from '../StepsHeader';
 import { Link } from 'react-router-dom';
 
@@ -13,7 +13,13 @@ const Checkout = () => {
         <Breadcrumb.Item > <Link to='/checkout'> Checkout </Link> </Breadcrumb.Item>
         <Breadcrumb.Item active > Order </Breadcrumb.Item>
       </StepsHeader>
-      <PaymentButton />
+      <br/>
+      <Row className='d-flex justify-content-center mt-6'>
+
+      <Col xs={8} >
+      <PaymentButton className='w-100'/>
+      </Col>
+      </Row>
     </Container>
   )
 }

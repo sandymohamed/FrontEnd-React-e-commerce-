@@ -11,6 +11,7 @@ import { RiDeleteBin5Fill } from 'react-icons/ri';
 import { selectUser } from '../../redux/reducers/userSlice';
 import StepsHeader from '../StepsHeader';
 import CardSketlon from '../CardSketlon';
+import DynamicImage from '../DynamicImage';
 
 // -------------------------------------------------------------------------------------
 const StyledCard = styled.div`
@@ -71,7 +72,6 @@ const CartPage = () => {
 
   const handleAddToCart = (item) => {
     dispatch(addItem(item));
-    console.log('add');
 
   };
 
@@ -169,10 +169,10 @@ const CartPage = () => {
           ) :
             items?.length ?
               items.map((item, index) => (
-                <Card key={index} className='w-100 d-flex flex-row m-2 box-border cart-card ' style={{ height: '20vh' }}>
+                <Card key={item?.id} className='w-100 d-flex flex-row m-2 box-border cart-card ' style={{ height: '20vh' }}>
 
-                  <Link to={`/product/${item._id}`} >
-                    <Card.Img variant="top" src={item.image} className='h-100 rounded' />
+                  <Link to={`/product/${item._id}`} className='w-25' >
+                  <DynamicImage variant="top" image={item.image} className='h-100 w-100 rounded' />
                   </Link>
 
 

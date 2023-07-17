@@ -32,7 +32,6 @@ function SearchBar() {
                     placeholder="Search"
                     value={searchQuery}
                     onChange={handleInputChange}
-                    fullWidth
                 />
                 <Button variant="outline-warning" type="submit">
                     Search

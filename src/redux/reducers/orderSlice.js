@@ -1,5 +1,6 @@
     import { createSlice } from '@reduxjs/toolkit';
 import AxiosInstance from '../../axiosInstance';
+import { removeCart } from './cartSlice';
 // --------------------------------------------------------------------
 
 
@@ -103,8 +104,7 @@ export const addOrder = (data) => async (dispatch) => {
         dispatch(setLoading());
         const response = await AxiosInstance.post('api/order/', data)
         dispatch(setOrder(response.data));
-
-        console.log("res: ", response);
+        dispatch(removeCart())
 
     } catch (error) {
         if (error.response && error.response.status === 400) {
@@ -125,14 +125,11 @@ export const addOrder = (data) => async (dispatch) => {
 
 export const getOrders = () => async (dispatch) => {
 
-    console.log('order  : ' );
-
     try {
         dispatch(setLoading());
         const response = await AxiosInstance.get('api/order/user' )
         dispatch(setOrder(response.data));
 
-        console.log("res: ", response);
 
     } catch (error) {
         if (error.response && error.response.status === 400) {
@@ -158,8 +155,6 @@ export const deleteOrder = (id) => async (dispatch) => {
         dispatch(setLoading());
         const response = await AxiosInstance.delete(`api/order/${id}` )
         
-        console.log('order oisd : ' + response );
-
     } catch (error) {
         if (error.response && error.response.status === 404) {
             // Server returned an error response with data

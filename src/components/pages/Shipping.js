@@ -57,7 +57,6 @@ const Shipping = () => {
 
 
     const onSubmit = async (data) => {
-        console.log(data);
         await dispatch(addShippingAddress(data)).then((res) => {
             navigate('/payment')
             showMessage('Success✔', 'success');

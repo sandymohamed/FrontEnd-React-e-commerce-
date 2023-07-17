@@ -20,7 +20,7 @@ function TabsComponent({ myTabs }) {
                    return <Tab
                         eventKey={tab?.href}
                         title={tab?.title}
-                        key={index}
+                        key={tab?.title}
                         className='text-light '
                         variant='warning'
                         tabClassName='text-light'

@@ -22,10 +22,7 @@ import SearchBar from '../Searchbar';
 const navLinks = [
   { title: 'Home', link: '/' },
   { title: 'Products', link: 'products' },
-  { title: 'profile', link: 'profile' },
-  { title: 'test', link: 'test' },
-  { title: 'error', link: 'ffff' },
-  { title: '', link: '' },
+  { title: 'New Products', link: 'new-products' },
 ]
 
 const StyledLink = styled.p`
@@ -74,14 +71,14 @@ const Header = () => {
       <Row className='pt-2'>
 
         <Col xs={12} md={4} className='d-block '  >
-          
-            <StyledLink
-              className='brand fs-1 me-2'
-            >Shop
-              <strong
-                style={{ color: '#474747' }}
-              >In</strong>
-            </StyledLink>
+
+          <StyledLink
+            className='brand fs-1 me-2'
+          >Shop
+            <strong
+              style={{ color: '#474747' }}
+            >In</strong>
+          </StyledLink>
 
         </Col>
 
@@ -208,7 +205,7 @@ const Header = () => {
 
       <Row style={{ width: '90%', padding: 0, marginLeft: '5%', marginRight: '5%' }}>
         <StyledLink >
-          <h3>{pageName}</h3>
+          <p className='h3'>{pageName}</p>
         </StyledLink>
         <Navbar bg="dark" expand="lg">
           <Container>
@@ -216,7 +213,7 @@ const Header = () => {
             <Nav className="me-auto display-flex flex-row">
               {
                 navLinks.map((item, index) => (
-                  <Nav.Link key={index} className='pe-2'>
+                  <Nav.Link key={item.title} className='pe-2'>
                     <Link
                       to={item.link}
                       className='text-reset text-decoration-none'

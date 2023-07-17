@@ -18,7 +18,6 @@ import ProfilePage from "./ProfilePage";
 import Shipping from "./Shipping";
 import PaymentPage from "./PaymentPage";
 import OrdersPage from "./OrdersPage";
-import Test from "./Test";
 import LatestProductsPage from "./LatestProductsPage";
 // -------------------------------------------------------------------------------------
 
@@ -39,10 +38,6 @@ const router = (isAuth) => createBrowserRouter([
       {
         path: "/new-products",
         element: <LatestProductsPage />,
-      },
-      {
-        path: "/test",
-        element: <Test />,
       },
       {
         path: "/product/:id",

@@ -7,10 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { addOrder, addPaymentResult, selectError, selectLoading, selectPaymentMethods, selectShihppingAddress } from "../redux/reducers/orderSlice";
 import { removeCart, selectCartitems, selectTotal, } from "../redux/reducers/cartSlice";
 import { useNavigate } from "react-router-dom";
+// --------------------------------------------------------------------
 
 const ID = "AcdIue6OSWJoAFIRAmsyu4fkXqYSqY7VtLOuaGqfxq2yRrczxaDMXKLT8KGpP5D2-2_Rh-xVV54Eg3lj"
 
-
+// --------------------------------------------------------------------
 
 
 const PaymentButton = () => {
@@ -48,25 +49,24 @@ const PaymentButton = () => {
     if (totalPrice > 0) {
 
       return actions.order.create({
-          purchase_units: [
-            {
-              amount: {
-                // charge users $499 per order
-                value: totalPrice,
-                // description: `${totalQuantity} items from ShopIn store`
-              },
+        purchase_units: [
+          {
+            amount: {
+              // charge users $499 per order
+              value: totalPrice,
+              // description: `${totalQuantity} items from ShopIn store`
             },
-          ],
-          // remove the applicaiton_context object if you need your users to add a shipping address
-          application_context: {
-            shipping_preference: "NO_SHIPPING",
-
           },
-        })
+        ],
+        // remove the applicaiton_context object if you need your users to add a shipping address
+        application_context: {
+          shipping_preference: "NO_SHIPPING",
+
+        },
+      })
         .then((orderID) => {
           setOrderID(orderID);
           setdata(data);
-          console.log("create", orderID);
 
           // navigate('/orders')
           return orderID;
@@ -78,7 +78,7 @@ const PaymentButton = () => {
 
 
   const order = {
-    products: [ ...products] ,
+    products: [...products],
     shippingAddress: { ...shihppingAddress },
     paymentMethods: data.paymentOption,
     totalPrice: totalPrice,
@@ -96,38 +96,32 @@ const PaymentButton = () => {
 
     return actions.order.capture()
       .then(function (details) {
-  
+
         const { payer } = details;
         setBillingDetails(payer);
         setSucceeded(true);
-  
-        
+
+
         return dispatch(addPaymentResult(payer))
           .then((res) => {
             showMessage('Profile Updated Successfully✔', 'warning');
-            console.log("capture", res);
-             dispatch(addOrder(order));
-             dispatch(removeCart());
+            dispatch(addOrder(order));
+            //  dispatch(removeCart());
 
           })
           .catch((error) => {
             showMessage('error❌', error, 'danger');
           });
       })
-     
+
       .catch(err => {
         setPaypalErrorMessage("Something went wrong.");
         showMessage('error❌', err, 'danger');
       });
   };
-  
-  
-  useEffect(() => {
 
-    console.log('lol');
-    console.log('err', paypalErrorMessage);
-    console.log('orderID', orderID);
-    console.log('billingDetails', billingDetails);
+
+  useEffect(() => {
 
   }, [paypalErrorMessage, orderID, billingDetails])
 

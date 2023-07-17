@@ -15,7 +15,7 @@ const schema = yup.object().shape({
     firstName: yup.string(),
     lastName: yup.string(),
     email: yup.string().email('Invalid email'),
-    avatar: yup.mixed().required('Avatar is required'),
+    avatar: yup.mixed(),
     password: yup.string(),
     confirmPassword: yup
         .string()

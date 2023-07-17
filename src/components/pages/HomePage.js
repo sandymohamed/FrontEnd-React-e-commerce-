@@ -65,7 +65,7 @@ const HomePage = () => {
                         <div className="spinner-border text-primary " role="status" />
                         <Container className='mb-4 d-flex justify-content-evenly aligh-items-center'>
                           {[...Array(4)].map((item, index) => (
-                            <CardSketlon h={38} w={20} index={index} className=' m-4 mb-3 ' />
+                            <CardSketlon h={38} w={20} key={index} className='m-4 mb-3 ' />
                           ))}
                         </Container>
                       </>
@@ -96,7 +96,7 @@ const HomePage = () => {
                         <div className="spinner-border text-primary " role="status" />
                         <Container className='mb-4 d-flex justify-content-evenly aligh-items-center'>
                           {[...Array(4)].map((item, index) => (
-                            <CardSketlon h={38} w={20} index={index} className=' m-4 mb-3 ' />
+                            <CardSketlon h={38} w={20} key={index} className=' m-4 mb-3 ' />
                           ))}
                         </Container>
                       </>
