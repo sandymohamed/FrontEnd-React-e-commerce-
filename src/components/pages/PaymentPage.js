@@ -93,8 +93,7 @@ const PaymentForm = () => {
         <Card className="w-75 text-start align-items-center text-light bg-dark card-box-border " >
           <Card.Header className='h2 text-bold'>Payment</Card.Header>
           <Card.Body>
-            {/* <Card.Title className='h1  text-light text-bold'>  Payment </Card.Title> */}
-            <Card.Text>
+            <Card.Text className='poppins-text'>
               All transactions are secure and encrypted.
             </Card.Text>
 

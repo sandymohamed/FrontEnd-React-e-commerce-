@@ -48,7 +48,7 @@ const ProductCard = ({ product }) => {
 
         <Row>
           <Col md={6}>
-            <Card.Title align="start" className='ps-1 brand text-nowrap'>{name}</Card.Title>
+            <Card.Title align="start" className='ps-1 poppins-text text-nowrap'>{name}</Card.Title>
           </Col>
 
           <Col md={6}>

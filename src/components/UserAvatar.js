@@ -21,7 +21,7 @@ const UserAvatar = ({ imageUrl, altText, firstName, lastName }) => {
             {imageUrl ? (
                 <DynamicImage image={imageUrl} alt={altText} className='w-100 rounded-circle boxShadow'/>
             ) : (
-                <div className="avatar-initials brand fs-5" style={{ color: '#474747' }} >{getInitials()}</div>
+                <div className="avatar-initials poppins-text fs-5" style={{ color: '#474747' }} >{getInitials()}</div>
             )}
         </div>
     );

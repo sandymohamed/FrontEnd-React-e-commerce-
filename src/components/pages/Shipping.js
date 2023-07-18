@@ -67,7 +67,7 @@ const Shipping = () => {
     }
 
     return (
-        <Container>
+        <Container className='poppins-text'>
             <StepsHeader>
                 <Breadcrumb.Item > <Link to='/shipping' className="text-reset text-decoration-none"> Shipping </Link></Breadcrumb.Item>
                 <Breadcrumb.Item active> Payment </Breadcrumb.Item>

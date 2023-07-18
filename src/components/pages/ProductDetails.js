@@ -1,4 +1,4 @@
-import  { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -40,13 +40,13 @@ const ProductDetails = () => {
 
   const [alertVariant, setAlertVariant] = useState(null);
   const [alertMessage, setAlertMessage] = useState('');
-  
+
   const showMessage = (message, variant) => {
     setAlertVariant(variant);
     setAlertMessage(message);
   };
 
-  
+
   const [imageFile, setImageFile] = useState(null);
 
   const {
@@ -54,7 +54,7 @@ const ProductDetails = () => {
     handleSubmit,
     formState: { errors },
     reset
-} = useForm({
+  } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       rating: '',
@@ -70,10 +70,10 @@ const ProductDetails = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImageFile(file);
-};
+  };
 
   const onSubmit = async (data) => {
-    
+
 
     const formData = new FormData();
     formData.append('image', imageFile);
@@ -232,37 +232,37 @@ const ProductDetails = () => {
         <Row className='mt-6'>
           <p className="fs-4">Add New Review:</p>
           {/* <FormProvider {...methods} > */}
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <Form.Group controlId="formBasicRating">
-                <Form.Control
-                  type="number"
-                  name="rating"
-                  placeholder="Rate"
-                  {...register('rating')}
-                />
-                {errors.rating && <span>This field is required and should be between 1 and 5</span>}
-              </Form.Group>
-
-              <Form.Group controlId="formBasicComment">
-                <Form.Label>Comment</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  name="comment"
-                  placeholder="Comment"
-                  {...register('comment')}
-                />
-                {errors.comment && <span>This field is required</span>}
-              </Form.Group>
-
-              <Form.Group className="mt-4 p-2" controlId="formImage">
-                <Form.Label className='w-50 text-light text-start fs-5'>Picture: </Form.Label>
-                <input type="file" onChange={handleImageChange} className='text-light' />
-
-                {errors.avatar && <Form.Text className="text-danger">{errors.image.message}</Form.Text>}
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Form.Group controlId="formBasicRating">
+              <Form.Control
+                type="number"
+                name="rating"
+                placeholder="Rate"
+                {...register('rating')}
+              />
+              {errors.rating && <span>This field is required and should be between 1 and 5</span>}
             </Form.Group>
 
-              <Button type="submit" className='btn buttons mt-3'>Submit</Button>
-            </Form>
+            <br />
+            <Form.Group controlId="formBasicComment">
+              <Form.Control
+                as="textarea"
+                name="comment"
+                placeholder="Comment"
+                {...register('comment')}
+              />
+              {errors.comment && <span>This field is required</span>}
+            </Form.Group>
+
+            <Form.Group className="mt-4 p-2" controlId="formImage">
+              <Form.Label className='w-50 text-light text-start fs-5'>Picture: </Form.Label>
+              <input type="file" onChange={handleImageChange} className='text-light' />
+
+              {errors.avatar && <Form.Text className="text-danger">{errors.image.message}</Form.Text>}
+            </Form.Group>
+
+            <Button type="submit" className='btn buttons mt-3'>Submit</Button>
+          </Form>
           {/* </FormProvider> */}
         </Row>
       </Container>

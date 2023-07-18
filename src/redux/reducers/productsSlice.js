@@ -50,6 +50,7 @@ export const fetchLatestProducts = () => async dispatch => {
     dispatch(setLoading());
     const response = await AxiosInstance.get('/api/products/latest');
 
+    return response.data;
   } catch (error) {
     dispatch(setError(error?.response?.data?.message))
 

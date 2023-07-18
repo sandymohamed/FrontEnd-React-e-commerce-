@@ -129,7 +129,7 @@ const CartPage = () => {
 
 
   return (
-    <Container align='left' >
+    <Container align='left' className='poppins-text' >
       <StepsHeader>
         <Breadcrumb.Item active> Shipping</Breadcrumb.Item>
         <Breadcrumb.Item active> Payment </Breadcrumb.Item>
@@ -169,7 +169,7 @@ const CartPage = () => {
           ) :
             items?.length ?
               items.map((item, index) => (
-                <Card key={item?.id} className='w-100 d-flex flex-row m-2 box-border cart-card ' style={{ height: '20vh' }}>
+                <Card key={item?.id} className='w-100 poppins-text d-flex flex-row m-2 box-border cart-card ' style={{ height: '20vh' }}>
 
                   <Link to={`/product/${item._id}`} className='w-25' >
                   <DynamicImage variant="top" image={item.image} className='h-100 w-100 rounded' />

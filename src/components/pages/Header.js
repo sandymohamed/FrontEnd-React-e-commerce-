@@ -73,7 +73,7 @@ const Header = () => {
         <Col xs={12} md={4} className='d-block '  >
 
           <StyledLink
-            className='brand fs-1 me-2'
+            className=' fs-1 me-2'
           >Shop
             <strong
               style={{ color: '#474747' }}

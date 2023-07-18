@@ -61,14 +61,13 @@ const OrdersPage = () => {
                                         }
                                     </Col>
                                 </Row>
-                                {/* <Container className="d-flex flex-row flex-wrap justify-content-center align-items-center"> */}
                                 <Container className="d-block">
 
-                                    <p className='fs-5 mt-4 text-start '> <span style={{ color: '#ccc', marginRight: '.5rem', }} >Ordered at:  </span> {new Date(order?.createdAt)?.toLocaleDateString()}</p>
-                                    <p className='fs-5 mt-4 text-start text-decoration-underline'> <span style={{ color: '#ccc', marginRight: '.5rem', }} > Shipping Status: </span>{order?.status}  </p>
-                                    <p className='fs-5 mt-4 text-start '> <span style={{ color: '#ccc', marginRight: '.5rem', }} > Address: </span> {order?.shippingAddress?.address} </p>
-                                    <p className='fs-5 mt-4 text-start '> <span style={{ color: '#ccc', marginRight: '.5rem', }} > Paid: </span> {order?.isPaid ? 'Yes' : 'NO'} </p>
-                                    <p className='fs-5 mt-4 text-start '> <span style={{ color: '#ccc', marginRight: '.5rem', }} > Total Price: </span> {order?.totalPrice} </p>
+                                    <p className='fs-5 mt-4 text-start '> <span style={{ color: '#ccc', marginRight: '.5rem', }} className='poppins-text' >Ordered at:  </span> {new Date(order?.createdAt)?.toLocaleDateString()}</p>
+                                    <p className='fs-5 mt-4 text-start text-decoration-underline'> <span style={{ color: '#ccc', marginRight: '.5rem', }} className='poppins-text' > Shipping Status: </span>{order?.status}  </p>
+                                    <p className='fs-5 mt-4 text-start '> <span style={{ color: '#ccc', marginRight: '.5rem', }} className='poppins-text' > Address: </span> {order?.shippingAddress?.address} </p>
+                                    <p className='fs-5 mt-4 text-start '> <span style={{ color: '#ccc', marginRight: '.5rem', }} className='poppins-text' > Paid: </span> {order?.isPaid ? 'Yes' : 'NO'} </p>
+                                    <p className='fs-5 mt-4 text-start '> <span style={{ color: '#ccc', marginRight: '.5rem', }} className='poppins-text' > Total Price: </span> {order?.totalPrice} </p>
 
                                 </Container>
                                 <Row >
